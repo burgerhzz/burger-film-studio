@@ -6,6 +6,7 @@
 - `site/index.html`：網站本體，作品資料直接寫在頁面裡
 - `site/works.json`：全部作品的資料，包含系列、分工、觀看數
 - `site/sprites/`：縮圖拼圖，一張大圖裡放很多支影片的縮圖
+- `.github/workflows/pages.yml`：推上 main 就自動發布 `site/` 到 GitHub Pages
 - `site/media/hero.mp4`：首頁主視覺影片，從 meowma.com 原檔轉成網頁用的版本
 
 ## 更新流程
