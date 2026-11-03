@@ -16,7 +16,7 @@ KIND = {"long": "長影音", "short": "短影音", "perform": "演出", "voice":
 cur = {}
 for k in J["works"]:
     for w in J["works"][k]:
-        cur[KIND[k] + "|" + url_of(k, w)] = (k, SN.get(w.get("series"), "") if k == "long" else w.get("group", w["ch"]), w.get("role", ""), w.get("person", ""))
+        cur[KIND[k] + "|" + url_of(k, w)] = (k, SN.get(w.get("series"), "") if k == "long" else w.get("group", w["ch"]), w.get("role", ""), w.get("person", ""), w.get("topic", ""))
 
 data = json.load(open(sys.argv[1]))
 rows = data["values"] if isinstance(data, dict) else data
@@ -28,10 +28,11 @@ for r in rows[1:]:
     u = get(r, "區塊") + "|" + get(r, "網址")
     o = {}
     if u in cur:
-        k, grp, role, person = cur[u]
+        k, grp, role, person, topic = cur[u]
         if get(r, "系列／頻道") and get(r, "系列／頻道") != grp: o["series"] = get(r, "系列／頻道")
         if get(r, "分工") != role and (get(r, "分工") or role): o["role"] = get(r, "分工")
         if get(r, "人物（左上角標籤）") != person: o["person"] = get(r, "人物（左上角標籤）")
+        if k == "short" and get(r, "主題（短影音）") and get(r, "主題（短影音）") != topic: o["topic"] = get(r, "主題（短影音）")
     if get(r, "顯示") == "隱藏": o["hide"] = True
     if get(r, "備註（給 Claude 的說明）"): o["note"] = get(r, "備註（給 Claude 的說明）")
     prev = ov.get(u, {})

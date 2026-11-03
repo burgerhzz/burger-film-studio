@@ -118,6 +118,7 @@ section.block{padding-block:56px 8px}
 .w .role::before{content:"▷ ";color:var(--accent)}
 .w.s h3{font-size:13px;margin-top:8px;color:var(--fg);font-weight:400}
 .w.s .role{font-size:11.5px;margin-top:2px}
+.w .ch{margin:2px 0 0;font-size:11px;color:var(--dim)}
 .feat-first{column-span:none}
 
 /* series cards */
@@ -374,7 +375,7 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
 
   <section class="block wrap" id="shorts">
     <div class="head"><h2><small>短影音</small>Shorts</h2><p>直式短片的拍攝與剪輯，同一支在 YouTube、IG、TikTok 都有發布時，顯示觀看數最高的平台。依觀看數排序。</p></div>
-    <div class="chips" id="shortChips" role="group" aria-label="篩選短影音"></div>
+    <div class="chips" id="shortChips" role="group" aria-label="依主題篩選短影音"></div>
     <div class="masonry v" id="shortGrid"></div>
     <div class="more"><button type="button" id="shortMore">顯示更多</button></div>
   </section>
@@ -488,7 +489,7 @@ function shortCard(w){
   const b = best(w);
   return `<a class="w s" href="${b.href}" target="_blank" rel="noopener" data-id="${w.id}" data-v="1" data-embed="${esc(b.embed)}">
     <span class="th v" style="${sprite(w.id,'v')}">${w.person ? `<span class="person">${esc(w.person)}</span>` : ''}<span class="views">${fmtV(b.v)}${b.plat ? `<i>${b.plat}</i>` : ''}</span></span>
-    <h3>${esc(clean(w.t))}</h3><p class="role">${esc(w.role)}</p></a>`;
+    <h3>${esc(clean(w.t))}</h3><p class="role">${esc(w.role)}</p><p class="ch">${esc(w.group)}</p></a>`;
 }
 
 // stats
@@ -513,10 +514,10 @@ $('featGrid').innerHTML = W.long.filter(w => 'feat' in w).sort((a,b) => a.feat -
 
 // shorts
 const shortsSorted = [...W.short].sort((a,b) => best(b).v - best(a).v);
-const groups = [...new Set(shortsSorted.map(w => w.group))];
+const groups = Object.entries(shortsSorted.reduce((m, w) => (m[w.topic] = (m[w.topic] || 0) + 1, m), {})).sort((a, b) => b[1] - a[1]).map(([k]) => k);
 let shortFilter = '全部', shortShown = 30;
 function renderShorts(){
-  const list = shortFilter === '全部' ? shortsSorted : shortsSorted.filter(w => w.group === shortFilter);
+  const list = shortFilter === '全部' ? shortsSorted : shortsSorted.filter(w => w.topic === shortFilter);
   mason($('shortGrid'), list.slice(0, shortShown).map(shortCard));
   $('shortMore').hidden = shortShown >= list.length;
   $('shortMore').textContent = `顯示更多（還有 ${list.length - shortShown} 支）`;
@@ -525,7 +526,7 @@ function chips(el, items, cur, on){
   el.innerHTML = items.map(([k, n]) => `<button type="button" class="chip" aria-pressed="${k === cur}" data-k="${esc(k)}">${esc(k)}<i>${n}</i></button>`).join('');
   el.onclick = e => { const b = e.target.closest('.chip'); if (!b) return; el.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === b)); on(b.dataset.k); };
 }
-chips($('shortChips'), [['全部', shortsSorted.length], ...groups.map(g => [g, shortsSorted.filter(w => w.group === g).length])], '全部', k => { shortFilter = k; shortShown = 30; renderShorts(); });
+chips($('shortChips'), [['全部', shortsSorted.length], ...groups.map(g => [g, shortsSorted.filter(w => w.topic === g).length])], '全部', k => { shortFilter = k; shortShown = 30; renderShorts(); });
 $('shortMore').onclick = () => { shortShown += 30; renderShorts(); };
 renderShorts();
 
