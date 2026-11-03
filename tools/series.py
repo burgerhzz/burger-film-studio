@@ -27,8 +27,8 @@ SERIES = [
  ("brand",   "形象宣傳",              "形象宣傳", "剪輯、視覺動畫設計",             lambda t,c,k: "形象" in k or "MV" in k),
  ("hanaro",  "火花羅",                "接案合作", "企劃、拍攝",                    lambda t,c,k: "火花羅" in c),
  ("enzo",    "興趣使然的攝影師 Enzo", "接案合作", "剪輯",                          lambda t,c,k: "Enzo" in c),
- ("leejing", "LEE-JING 李靜",         "VLOG",     "剪輯",                          lambda t,c,k: "李靜" in c),
- ("aquan",   "安筌運轉",              "VLOG",     "剪輯",                          lambda t,c,k: "安筌" in c),
+ ("leejing", "LEE-JING 李靜",         "接案合作",     "剪輯",                          lambda t,c,k: "李靜" in c),
+ ("aquan",   "安筌運轉",              "接案合作",     "剪輯",                          lambda t,c,k: "安筌" in c),
  ("moto",    "機車介紹＆試乘",        "機車媒體", "拍攝、剪輯、視覺動畫、封面設計",  lambda t,c,k: "小老婆" in c or "發表會" in k or "產品測試" in k or "人物專訪" in k),
  ("ppatalk", "PressPlay 人物訪談",     "知識節目", "拍攝、剪輯",                    lambda t,c,k: "PressPlay" in c and re.search(r"feat\.", t) and "#shorts" not in t.lower()),
  ("ppa",     "PressPlay 節目",        "知識節目", "拍攝、剪輯",                    lambda t,c,k: "PressPlay" in c),
@@ -42,6 +42,7 @@ OVERRIDE = {
  "GaV_DLR59n8": ("brand", "拍攝、剪輯、視覺動畫設計、封面"),
  "NjP_ujIBExA": ("brand", "視覺動畫設計"),
  "FC_UKO70b04": ("unlock", None),
+ "cPHbgHZSVIs": ("decode", "拍攝"),  # 她 11/3 在試算表指定
  "prSXsuJQyhM": ("brand", None),
  "471FzqmM4ac": ("brand", None),
  "IxO8qdG-eok": ("other", None),
