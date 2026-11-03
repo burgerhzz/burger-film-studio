@@ -3,7 +3,11 @@ import re
 # key, 顯示名稱, 大類, 分工, 比對函式(title, channel, cat)
 SERIES = [
  ("talk",    "初日會客室",            "醫學健康", "拍攝",                          lambda t,c,k: "初日會客室" in t),
- ("cofit",   "初日醫學 Cofit",        "醫學健康", "後製",                         lambda t,c,k: "Cofit" in c),
+ ("women",   "女人療心室",            "醫學健康", "後製",                         lambda t,c,k: "Cofit" in c and "女人療心室" in t),
+ ("wei",     "我就問魏什麼",          "醫學健康", "後製",                         lambda t,c,k: "Cofit" in c and "我就問魏" in t),
+ ("decode",  "Cofit 國際醫學解碼",    "醫學健康", "後製",                         lambda t,c,k: "Cofit" in c and "國際醫學解碼" in t),
+ ("unlock",  "一鍵解鎖",              "醫學健康", "後製",                         lambda t,c,k: False),
+ ("cofit",   "初日診所",              "醫學健康", "後製",                         lambda t,c,k: "Cofit" in c),
  ("pro",     "讓 Pro 級的來",         "知識節目", "企劃、拍攝、剪輯、視覺動畫",     lambda t,c,k: re.search(r"讓\s*Pro級的來|讓pro級的來", t, re.I) or "專家QA" in k),
  ("book",    "耳邊說書",              "知識節目", "拍攝、收音、剪輯",              lambda t,c,k: "耳邊說書" in t or "耳邊說書" in k),
  ("celeb",   "名人專訪",              "名人專訪", "拍攝、剪輯、片頭、視覺設計、封面", lambda t,c,k: re.search(r"職人訪談|人物專訪", t) or re.search(r"ROLAND|羅蘭|阿基師|阿部瑪利亞|阿布瑪莉雅|Peeta|PEETA", t)),
@@ -37,6 +41,7 @@ OVERRIDE = {
  "nIV0FMC_5qM": ("brand", "導演、企劃、剪輯、調色、視覺動畫設計、封面"),
  "GaV_DLR59n8": ("brand", "拍攝、剪輯、視覺動畫設計、封面"),
  "NjP_ujIBExA": ("brand", "視覺動畫設計"),
+ "FC_UKO70b04": ("unlock", None),
  "prSXsuJQyhM": ("brand", None),
  "471FzqmM4ac": ("brand", None),
  "IxO8qdG-eok": ("other", None),

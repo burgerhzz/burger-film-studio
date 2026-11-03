@@ -3,6 +3,8 @@ import json, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BLURB = {
  "cofit": "宋晏仁醫師與初日診所醫師群的健康節目",
+ "women": "女性身心健康對談",
+ "talk": "邀請各領域專家的訪談節目",
  "pro": "feat. 火花羅、好味營養師品瑄、35 線上賞屋 TED、娘娘、雪薇英文、故宮、法律白話文、簡少年…｜25+ 集節目、100+ 支短影音",
  "book": "說書節目，Podcast／YouTube／Reels 同步產出｜21 集",
  "celeb": "ROLAND、阿部瑪利亞、阿基師、PEETA 葛格",
