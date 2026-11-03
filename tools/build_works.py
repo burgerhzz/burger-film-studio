@@ -19,8 +19,8 @@ extra = [i for i in cat if i not in long_ids and i not in perform_ids and i not 
 meowma = re.findall(r"(?:youtu\.be/|watch\?v=)([A-Za-z0-9_-]{11})", open(f"{DATA}/old_sites/meowma_sheet.csv").read())
 pool_long = [i for i in dict.fromkeys(long_ids + extra + meowma) if i not in short_ids and i in D]
 
-FEATURED = ["wAKxwIRtOq4","18XdHHARSGk","q2qhfIAB6KI","zfGJNq-Vb-k","wlTROaDhodk","CIrzjbF3X2A","YUPwKSOXsRE","xFAHxgq8BI4",
-            "DcTOvEZuDNY","Y5feeDqTcAQ","Atnpqw0sRM8","nSfwU_ccPKA","apABpKbsO-8","4t7EFWlc0uY","YoPYjvPF-Sc","2wlvNQsePY4","EBm3SWrrqm8","nIV0FMC_5qM"]
+# 精選：每個系列只取觀看數最高的一支，再取前 5 名（在歸系列之後計算，見下方）
+FEATURED_N = 5
 
 def base(i):
     d = D[i]
@@ -30,8 +30,11 @@ works = {"long": [], "short": [], "perform": [], "voice": []}
 for i in pool_long:
     key, name, group, role = classify(i, D[i]["title"], D[i]["channel"], cat.get(i, ""))
     w = base(i); w.update(series=key, role=role)
-    if i in FEATURED: w["feat"] = FEATURED.index(i)
     works["long"].append(w)
+best = {}
+for w in works["long"]:
+    if w["series"] not in best or w["v"] > best[w["series"]]["v"]: best[w["series"]] = w
+for n, w in enumerate(sorted(best.values(), key=lambda w: -w["v"])[:FEATURED_N]): w["feat"] = n
 
 def short_group(d):
     c = d["channel"]
