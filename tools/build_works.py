@@ -96,6 +96,26 @@ for i in perform_ids:
 for i in voice_ids:
     if i in D: works["voice"].append(base(i))
 
+# 試算表「全部作品」分頁的修改（apply_sheet.py 產生）：改系列、改分工、隱藏
+OV = json.load(open(f"{ROOT}/tools/sheet_overrides.json")) if os.path.exists(f"{ROOT}/tools/sheet_overrides.json") else {}
+SKEY = {s[1]: s[0] for s in SERIES}
+unknown = []
+for k in works:
+    keep = []
+    for w in works[k]:
+        u = {"long": "長影音", "short": "短影音", "perform": "演出", "voice": "配音"}[k] + "|" + (w["xlink"] if w.get("only") else f"https://www.youtube.com/{'shorts/' if k == 'short' else 'watch?v='}{w['id']}")
+        o = OV.get(u, {})
+        if o.get("hide"): continue
+        if "role" in o: w["role"] = o["role"]
+        if "series" in o:
+            if k == "long":
+                if o["series"] in SKEY: w["series"] = SKEY[o["series"]]
+                else: unknown.append((u, o["series"]))
+            else: w["group"] = o["series"]
+        keep.append(w)
+    works[k] = keep
+if unknown: print("⚠ 試算表裡有不存在的系列名稱（沒套用）：", unknown)
+
 # 縮圖
 def fetch(i, kind):
     p = f"{DATA}/thumbs_raw/{i}_{kind}.jpg"

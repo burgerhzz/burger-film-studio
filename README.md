@@ -19,3 +19,9 @@ python3 tools/build_site.py                                      # 套版產生 
 
 - 系列歸類規則和每個系列的分工寫在 `tools/series.py`
 - 精選清單寫在 `tools/build_works.py` 的 `FEATURED`
+
+## 從試算表改作品
+試算表「全部作品」分頁可以直接改「系列／頻道」「分工」，或在「顯示」欄選「隱藏」。
+1. 讀取 `全部作品!A1:J` 的資料，存成 JSON 檔
+2. `python3 tools/apply_sheet.py 存好的檔.json`：比對後寫入 `tools/sheet_overrides.json`，以「區塊|網址」當鍵
+3. `python3 tools/build_works.py && python3 tools/build_site.py`
