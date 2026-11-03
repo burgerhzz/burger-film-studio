@@ -2,6 +2,7 @@
 import re
 # key, 顯示名稱, 大類, 分工, 比對函式(title, channel, cat)
 SERIES = [
+ ("talk",    "初日會客室",            "醫學健康", "拍攝",                          lambda t,c,k: "初日會客室" in t),
  ("cofit",   "初日醫學 Cofit",        "醫學健康", "後製",                         lambda t,c,k: "Cofit" in c),
  ("pro",     "讓 Pro 級的來",         "知識節目", "企劃、拍攝、剪輯、視覺動畫",     lambda t,c,k: re.search(r"讓\s*Pro級的來|讓pro級的來", t, re.I) or "專家QA" in k),
  ("book",    "耳邊說書",              "知識節目", "拍攝、收音、剪輯",              lambda t,c,k: "耳邊說書" in t or "耳邊說書" in k),
