@@ -7,6 +7,13 @@ from series import SERIES, classify
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA, SITE = f"{ROOT}/data", f"{ROOT}/site"
 os.makedirs(f"{SITE}/sprites", exist_ok=True); os.makedirs(f"{DATA}/thumbs_raw", exist_ok=True)
+# 精選：每個系列只取觀看數最高的一支，再取前 5 名（在歸系列之後計算，見下方）
+FEATURED_N = 5
+# 機車相關系列在精選裡合併成一組，只留一支（她 11/3 指示）
+FEAT_BUCKET = {"moto": "機車", "pk": "機車", "trivia": "機車", "offroad": "機車", "girl": "機車", "ricoland": "機車", "aquan": "機車"}
+# 不是她做的作品，整站不放
+EXCLUDE = {"DAm1nPpNG60"}  # GQ Taiwan 羅蘭職業秘辛（上集）
+
 D = {json.load(open(f))["id"]: json.load(open(f)) for f in glob.glob(f"{DATA}/details/*.json")}
 cat = {}
 for f in sorted(glob.glob(f"{DATA}/cat/*.json")):
@@ -17,10 +24,7 @@ long_ids, short_ids, perform_ids = L("long"), L("short"), L("perform")
 voice_ids = [e["id"] for e in json.load(open(glob.glob(f"{DATA}/cat/PLpPaq7UZT1Wtutbr06qq3S2YLe8ce-S-N.json")[0]))["entries"]]
 extra = [i for i in cat if i not in long_ids and i not in perform_ids and i not in short_ids and i not in voice_ids and "music" not in cat[i]]
 meowma = re.findall(r"(?:youtu\.be/|watch\?v=)([A-Za-z0-9_-]{11})", open(f"{DATA}/old_sites/meowma_sheet.csv").read())
-pool_long = [i for i in dict.fromkeys(long_ids + extra + meowma) if i not in short_ids and i in D]
-
-# 精選：每個系列只取觀看數最高的一支，再取前 5 名（在歸系列之後計算，見下方）
-FEATURED_N = 5
+pool_long = [i for i in dict.fromkeys(long_ids + extra + meowma) if i not in short_ids and i in D and i not in EXCLUDE]
 
 def base(i):
     d = D[i]
@@ -33,7 +37,8 @@ for i in pool_long:
     works["long"].append(w)
 best = {}
 for w in works["long"]:
-    if w["series"] not in best or w["v"] > best[w["series"]]["v"]: best[w["series"]] = w
+    k = FEAT_BUCKET.get(w["series"], w["series"])
+    if k not in best or w["v"] > best[k]["v"]: best[k] = w
 for n, w in enumerate(sorted(best.values(), key=lambda w: -w["v"])[:FEATURED_N]): w["feat"] = n
 
 def short_group(d):
