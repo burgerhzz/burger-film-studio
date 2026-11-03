@@ -1,0 +1,4 @@
+# 原始資料（抓取快取、原檔影片）不進版控，用 tools/ 可重建
+data/
+review/
+.DS_Store
