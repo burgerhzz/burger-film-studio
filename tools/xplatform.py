@@ -36,4 +36,5 @@ XP = [
  ("https://www.instagram.com/reel/C1MtXeRPaao/", "IG", 162000, "wXmOFsX_KAA", None, None),
  ("https://www.instagram.com/reel/C1E6i2oPen3/", "IG", 221000, "POjRWcVWJrg", None, None),
  ("https://www.instagram.com/reel/CpB3P7jvT1M/", "IG", 23000, "n5XDi444l8U", None, None),
+ ("https://www.tiktok.com/@pressplayacademy/video/7470818994195352833", "TikTok", 32800, "9eFdy6iCR0g", None, "樂咖"),  # 11/3 她給的連結，直接讀頁面
 ]
