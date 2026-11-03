@@ -1,3 +1,12 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Burger Film Studio">
+<meta property="og:description" content="偷心漢堡的影像作品集：網路節目、短影音、Podcast 的企劃、拍攝與剪輯，以及 AI 剪輯工具開發。">
+<meta property="og:image" content="https://burgerhzz.github.io/burger-film-studio/media/hero.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
 <title>Burger Film Studio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Burger Film Studio｜偷心漢堡的影像作品集：網路節目、短影音、Podcast、形象影片的企劃、拍攝與剪輯。">
@@ -149,6 +158,17 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
 .tool a{font-size:13px;font-weight:700;color:var(--accent);text-decoration:none}
 .tool a:hover{text-decoration:underline}
 
+/* player */
+#player{width:min(1100px,calc(100vw - 24px));background:#000;border-radius:14px;overflow:hidden}
+#player.v{width:min(420px,calc(100vw - 24px))}
+.pl-head{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--surface)}
+.pl-head a{font-size:13px;color:var(--muted);text-decoration:none}
+.pl-head a:hover{color:var(--fg)}
+.pl-head .x{margin-left:auto;appearance:none;background:var(--surface-2);color:var(--fg);border:1px solid var(--line-2);border-radius:999px;width:34px;height:34px;font-size:16px;cursor:pointer}
+.pl-frame{aspect-ratio:16/9;max-height:calc(100dvh - 120px);margin:0 auto}
+#player.v .pl-frame{aspect-ratio:9/16}
+.pl-frame iframe{width:100%;height:100%;border:0;display:block}
+
 /* about */
 .about{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px 64px}
 .tl{list-style:none;margin:0;padding:0;display:grid;gap:0}
@@ -186,6 +206,9 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
   .hero{aspect-ratio:4/3}
 }
 </style>
+</head>
+<body>
+
 
 <nav class="nav" aria-label="主選單">
   <div class="wrap">
@@ -264,7 +287,7 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
   </section>
 
   <section class="block wrap" id="featured">
-    <div class="head"><h2><small>精選作品</small>Selected</h2><p>依觀看數與系列代表性挑選。點縮圖會在 YouTube 開啟影片。</p></div>
+    <div class="head"><h2><small>精選作品</small>Selected</h2><p>依觀看數與系列代表性挑選。點縮圖直接播放。</p></div>
     <div class="masonry" id="featGrid"></div>
   </section>
 
@@ -306,6 +329,11 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
 </main>
 <footer>© Burger Film Studio · 偷心漢堡。影片版權歸各頻道所有，僅作作品展示。</footer>
 
+<dialog id="player" aria-label="播放影片">
+  <div class="pl-head"><a id="plLink" href="#" target="_blank" rel="noopener">在 YouTube 開啟 ↗</a><button class="x" type="button" id="plClose" aria-label="關閉">✕</button></div>
+  <div class="pl-frame" id="plFrame"></div>
+</dialog>
+
 <dialog id="dlg" aria-labelledby="dlgTitle">
   <div class="dlg-head"><div><h3 id="dlgTitle"></h3><p id="dlgSub"></p></div><button class="x" type="button" id="dlgClose" aria-label="關閉">✕</button></div>
   <div class="dlg-body"><div class="masonry" id="dlgGrid"></div></div>
@@ -333,13 +361,13 @@ const url = (w, short) => short ? `https://www.youtube.com/shorts/${w.id}` : `ht
 
 function longCard(w, opts = {}){
   const s = SER[w.series];
-  return `<a class="w" href="${url(w)}" target="_blank" rel="noopener">
+  return `<a class="w" href="${url(w)}" target="_blank" rel="noopener" data-id="${w.id}">
     <span class="th" style="${sprite(w.id,'h')}"><span class="views">${fmtV(w.v)}</span><span class="dur">${fmtS(w.s)}</span></span>
     <span class="meta">${opts.series !== false && s ? `<span class="sr">${esc(s.name)}</span>` : ''}<span>${fmtD(w.d)}</span>${opts.channel ? `<span>${esc(w.ch)}</span>` : ''}</span>
     <h3>${esc(w.t)}</h3>${w.role && opts.role !== false ? `<p class="role">${esc(w.role)}</p>` : ''}</a>`;
 }
 function shortCard(w){
-  return `<a class="w s" href="${url(w, true)}" target="_blank" rel="noopener">
+  return `<a class="w s" href="${url(w, true)}" target="_blank" rel="noopener" data-id="${w.id}" data-v="1">
     <span class="th v" style="${sprite(w.id,'v')}"><span class="views">${fmtV(w.v)}</span></span>
     <h3>${esc(clean(w.t))}</h3><p class="role">${esc(w.role)}</p></a>`;
 }
@@ -427,6 +455,24 @@ function paged(listEl, btn, list, step, render){
 paged($('perfGrid'), $('perfMore'), [...W.perform].sort((a,b) => b.v - a.v), 16, w => longCard(w, {series:false, channel:true, role:false}));
 paged($('voiceGrid'), $('voiceMore'), [...W.voice].sort((a,b) => b.v - a.v), 8, w => longCard(w, {series:false, role:false}));
 
+// 站內播放：預覽環境（不能嵌入 YouTube）就照原本連結開新分頁
+const EMBED = !/claude\.ai|claudeusercontent|anthropic/.test(location.hostname) && location.protocol !== 'file:';
+const player = $('player');
+document.addEventListener('click', e => {
+  const a = e.target.closest('a.w[data-id]');
+  if (!a || !EMBED || e.metaKey || e.ctrlKey || e.shiftKey || !player.showModal) return;
+  e.preventDefault();
+  player.classList.toggle('v', !!a.dataset.v);
+  $('plLink').href = a.href;
+  $('plFrame').innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${a.dataset.id}?autoplay=1&rel=0&playsinline=1" title="YouTube 播放器" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  if (dlg.open) dlg.close();
+  player.showModal();
+});
+const closePlayer = () => { $('plFrame').innerHTML = ''; if (player.open) player.close(); };
+$('plClose').onclick = closePlayer;
+player.addEventListener('click', e => { if (e.target === player) closePlayer(); });
+player.addEventListener('close', () => { $('plFrame').innerHTML = ''; });
+
 // copy mail
 $('copyMail').onclick = async () => {
   const t = $('mailAddr').textContent;
@@ -441,3 +487,6 @@ if (matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute(
 else { v.muted = true; const p = v.play(); if (p && p.catch) p.catch(() => {}); }
 })();
 </script>
+
+</body>
+</html>

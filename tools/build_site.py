@@ -23,5 +23,18 @@ BLURB = {
 }
 data = open(f"{ROOT}/site/works.json").read().replace("</", "<\\/")
 html = open(f"{ROOT}/tools/site_template.html").read().replace("__DATA__", data).replace("__BLURB__", json.dumps(BLURB, ensure_ascii=False))
+# 一般網站需要完整的文件標頭（claude.ai 預覽會自己包，這裡補上）
+head = """<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Burger Film Studio">
+<meta property="og:description" content="偷心漢堡的影像作品集：網路節目、短影音、Podcast 的企劃、拍攝與剪輯，以及 AI 剪輯工具開發。">
+<meta property="og:image" content="https://burgerhzz.github.io/burger-film-studio/media/hero.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+"""
+i = html.index("</style>") + len("</style>")
+html = head + html[:i] + "\n</head>\n<body>\n" + html[i:] + "\n</body>\n</html>\n"
 open(f"{ROOT}/site/index.html", "w").write(html)
 print(len(html) // 1024, "KB")
