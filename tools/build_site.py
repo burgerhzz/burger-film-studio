@@ -39,4 +39,20 @@ head = """<!doctype html>
 i = html.index("</style>") + len("</style>")
 html = head + html[:i] + "\n</head>\n<body>\n" + html[i:] + "\n</body>\n</html>\n"
 open(f"{ROOT}/site/index.html", "w").write(html)
+
+# 給 Google 試算表用 IMPORTDATA 讀的作品清單（全部都是 YouTube／IG 上公開的資訊）
+import csv
+J = json.load(open(f"{ROOT}/site/works.json"))
+SN = {s["key"]: s["name"] for s in J["series"]}
+KIND = {"long": "長影音", "short": "短影音", "perform": "演出", "voice": "配音"}
+with open(f"{ROOT}/site/works.csv", "w", newline="") as f:
+    w = csv.writer(f)
+    w.writerow(["區塊", "系列／頻道", "發布", "標題", "分工", "觀看數", "觀看數平台", "網址"])
+    for k in ("long", "short", "perform", "voice"):
+        for x in sorted(J["works"][k], key=lambda x: x["d"], reverse=True):
+            grp = SN.get(x.get("series"), "") if k == "long" else x.get("group", x["ch"])
+            v, plat = (x["xv"], x["xp"]) if x.get("xv", 0) > x["v"] else (x["v"], "YouTube")
+            if x.get("only"): u = x["xlink"]
+            else: u = f"https://www.youtube.com/{'shorts/' if k == 'short' else 'watch?v='}{x['id']}"
+            w.writerow([KIND[k], grp, x["d"][:7], x["t"], x.get("role", ""), v, plat, u])
 print(len(html) // 1024, "KB")
