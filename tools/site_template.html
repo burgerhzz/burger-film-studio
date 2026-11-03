@@ -311,7 +311,7 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
   </section>
 
   <section class="block wrap" id="shorts">
-    <div class="head"><h2><small>短影音</small>Shorts</h2><p>直式短片的拍攝與剪輯，同一支在 YouTube、IG、TikTok 都有發布時，顯示觀看數最高的平台。名人合作置頂，其餘依觀看數排序。</p></div>
+    <div class="head"><h2><small>短影音</small>Shorts</h2><p>直式短片的拍攝與剪輯，同一支在 YouTube、IG、TikTok 都有發布時，顯示觀看數最高的平台。依觀看數排序。</p></div>
     <div class="chips" id="shortChips" role="group" aria-label="篩選短影音"></div>
     <div class="masonry v" id="shortGrid"></div>
     <div class="more"><button type="button" id="shortMore">顯示更多</button></div>
@@ -431,7 +431,7 @@ $('featGrid').innerHTML = W.long.filter(w => 'feat' in w).sort((a,b) => a.feat -
   </a>`).join('');
 
 // shorts
-const shortsSorted = [...W.short].sort((a,b) => (('pin' in a) ? a.pin : 999) - (('pin' in b) ? b.pin : 999) || best(b).v - best(a).v);
+const shortsSorted = [...W.short].sort((a,b) => best(b).v - best(a).v);
 const groups = [...new Set(shortsSorted.map(w => w.group))];
 let shortFilter = '全部', shortShown = 30;
 function renderShorts(){
