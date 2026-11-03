@@ -96,6 +96,14 @@ for i in perform_ids:
 for i in voice_ids:
     if i in D: works["voice"].append(base(i))
 
+# 長影音清單裡標 #shorts 的其實是短影音（她 11/3 指示移過去）
+moved = [w for w in works["long"] if "#shorts" in w["t"].lower()]
+works["long"] = [w for w in works["long"] if "#shorts" not in w["t"].lower()]
+for w in moved:
+    w["group"] = "PressPlay Academy" if "PressPlay" in w["ch"] else w["ch"]
+    w.pop("series", None); w.pop("feat", None)
+    works["short"].append(w)
+
 # 試算表「全部作品」分頁的修改（apply_sheet.py 產生）：改系列、改分工、隱藏
 OV = json.load(open(f"{ROOT}/tools/sheet_overrides.json")) if os.path.exists(f"{ROOT}/tools/sheet_overrides.json") else {}
 SKEY = {s[1]: s[0] for s in SERIES}
@@ -107,6 +115,9 @@ for k in works:
         o = OV.get(u, {})
         if o.get("hide"): continue
         if "role" in o: w["role"] = o["role"]
+        if "person" in o:
+            if o["person"]: w["person"] = o["person"]
+            elif "feat" not in w: w.pop("person", None)
         if "series" in o:
             if k == "long":
                 if o["series"] in SKEY: w["series"] = SKEY[o["series"]]

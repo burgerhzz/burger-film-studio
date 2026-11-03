@@ -466,7 +466,7 @@ const url = (w, short) => short ? `https://www.youtube.com/shorts/${w.id}` : `ht
 function longCard(w, opts = {}){
   const s = SER[w.series];
   return `<a class="w" href="${url(w)}" target="_blank" rel="noopener" data-id="${w.id}">
-    <span class="th" style="${sprite(w.id,'h')}"><span class="views">${fmtV(w.v)}</span><span class="dur">${fmtS(w.s)}</span></span>
+    <span class="th" style="${sprite(w.id,'h')}">${w.person ? `<span class="person">${esc(w.person)}</span>` : ''}<span class="views">${fmtV(w.v)}</span><span class="dur">${fmtS(w.s)}</span></span>
     <span class="meta">${opts.series !== false && s ? `<span class="sr">${esc(s.name)}</span>` : ''}<span>${fmtD(w.d)}</span>${opts.channel ? `<span>${esc(w.ch)}</span>` : ''}</span>
     <h3>${esc(w.t)}</h3>${w.role && opts.role !== false ? `<p class="role">${esc(w.role)}</p>` : ''}</a>`;
 }

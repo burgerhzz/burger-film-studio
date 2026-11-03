@@ -1,7 +1,7 @@
 """把試算表「全部作品」分頁的修改轉成 tools/sheet_overrides.json（以「區塊|網址」為鍵，同一支可能同時在長影音和演出）。
 輸入：Sheets get_values 的 JSON（範圍 全部作品!A1:J…，含標題列），存成檔案後執行：
     python3 tools/apply_sheet.py 讀回的檔案.json
-只記錄「跟網站目前資料不同」的欄位：系列／頻道、分工、顯示＝隱藏。"""
+只記錄「跟網站目前資料不同」的欄位：系列／頻道、分工、人物、顯示＝隱藏。"""
 import json, os, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 J = json.load(open(f"{ROOT}/site/works.json"))
@@ -16,7 +16,7 @@ KIND = {"long": "長影音", "short": "短影音", "perform": "演出", "voice":
 cur = {}
 for k in J["works"]:
     for w in J["works"][k]:
-        cur[KIND[k] + "|" + url_of(k, w)] = (k, SN.get(w.get("series"), "") if k == "long" else w.get("group", w["ch"]), w.get("role", ""))
+        cur[KIND[k] + "|" + url_of(k, w)] = (k, SN.get(w.get("series"), "") if k == "long" else w.get("group", w["ch"]), w.get("role", ""), w.get("person", ""))
 
 data = json.load(open(sys.argv[1]))
 rows = data["values"] if isinstance(data, dict) else data
@@ -28,9 +28,10 @@ for r in rows[1:]:
     u = get(r, "區塊") + "|" + get(r, "網址")
     o = {}
     if u in cur:
-        k, grp, role = cur[u]
+        k, grp, role, person = cur[u]
         if get(r, "系列／頻道") and get(r, "系列／頻道") != grp: o["series"] = get(r, "系列／頻道")
         if get(r, "分工") != role and (get(r, "分工") or role): o["role"] = get(r, "分工")
+        if get(r, "人物（左上角標籤）") != person: o["person"] = get(r, "人物（左上角標籤）")
     if get(r, "顯示") == "隱藏": o["hide"] = True
     if get(r, "備註（給 Claude 的說明）"): o["note"] = get(r, "備註（給 Claude 的說明）")
     prev = ov.get(u, {})
