@@ -70,12 +70,20 @@ for i in short_ids:
     pin = [n for n, (p, _) in enumerate(SHORT_PIN) if p == i]
     if pin: w["pin"] = pin[0]; w["person"] = SHORT_PIN[pin[0]][1]
     works["short"].append(w)
+# 長影音清單裡標 #shorts 的其實是短影音（她 11/3 指示移過去）
+moved = [w for w in works["long"] if "#shorts" in w["t"].lower()]
+works["long"] = [w for w in works["long"] if "#shorts" not in w["t"].lower()]
+for w in moved:
+    w["group"] = "PressPlay Academy" if "PressPlay" in w["ch"] else w["ch"]
+    w.pop("series", None); w.pop("feat", None)
+    works["short"].append(w)
+
 # 跨平台觀看數：對到 YouTube 的補上 IG／TikTok 數字；只在 IG／TikTok 的另外新增
 sbyid = {w["id"]: w for w in works["short"]}
 for n, (link, plat, views, yt, title, who) in enumerate(XP):
     if yt and yt in sbyid:
         w = sbyid[yt]
-        if plat != "YT" and views > w["v"]: w.update(xv=views, xp=plat, xlink=link)
+        if plat != "YT" and views > max(w["v"], w.get("xv", 0)): w.update(xv=views, xp=plat, xlink=link)
         elif plat == "YT": w["v"] = max(w["v"], views)
         if who and "person" not in w: w["person"] = who
     elif not yt:
@@ -95,14 +103,6 @@ for i in perform_ids:
     if i in D: works["perform"].append(base(i))
 for i in voice_ids:
     if i in D: works["voice"].append(base(i))
-
-# 長影音清單裡標 #shorts 的其實是短影音（她 11/3 指示移過去）
-moved = [w for w in works["long"] if "#shorts" in w["t"].lower()]
-works["long"] = [w for w in works["long"] if "#shorts" not in w["t"].lower()]
-for w in moved:
-    w["group"] = "PressPlay Academy" if "PressPlay" in w["ch"] else w["ch"]
-    w.pop("series", None); w.pop("feat", None)
-    works["short"].append(w)
 
 # 試算表「全部作品」分頁的修改（apply_sheet.py 產生）：改系列、改分工、隱藏
 OV = json.load(open(f"{ROOT}/tools/sheet_overrides.json")) if os.path.exists(f"{ROOT}/tools/sheet_overrides.json") else {}
