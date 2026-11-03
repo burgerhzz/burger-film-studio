@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 from PIL import Image
 sys.path.insert(0, os.path.dirname(__file__))
 from series import SERIES, classify
+from xplatform import XP
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA, SITE = f"{ROOT}/data", f"{ROOT}/site"
 os.makedirs(f"{SITE}/sprites", exist_ok=True); os.makedirs(f"{DATA}/thumbs_raw", exist_ok=True)
@@ -20,8 +21,8 @@ FEATURED = [
 # 短影音最上面固定的名人區
 SHORT_PIN = [
     ("gLg6L4u7AAc", "達康.come"),
+    ("Xd3mFFdQRsw", "娘娘"),
     ("qQNVwO6P1YU", "娘娘"),
-    ("z7H2Q4AH6dY", "娘娘"),
     ("wfjymOkyMbQ", "樂咖"),
     ("R6j_95gO2s4", "樂咖"),
 ]
@@ -69,6 +70,27 @@ for i in short_ids:
     pin = [n for n, (p, _) in enumerate(SHORT_PIN) if p == i]
     if pin: w["pin"] = pin[0]; w["person"] = SHORT_PIN[pin[0]][1]
     works["short"].append(w)
+# 跨平台觀看數：對到 YouTube 的補上 IG／TikTok 數字；只在 IG／TikTok 的另外新增
+sbyid = {w["id"]: w for w in works["short"]}
+for n, (link, plat, views, yt, title, who) in enumerate(XP):
+    if yt and yt in sbyid:
+        w = sbyid[yt]
+        if plat != "YT" and views > w["v"]: w.update(xv=views, xp=plat, xlink=link)
+        elif plat == "YT": w["v"] = max(w["v"], views)
+        if who and "person" not in w: w["person"] = who
+    elif not yt:
+        code = re.search(r"/(?:reel|video)/([^/?]+)", link).group(1)
+        nid = ("ig_" if plat == "IG" else "tt_") + code
+        # 縮圖：Strikingly 截圖去掉底部的觀看數列
+        raw = f"{DATA}/thumbs_raw/{nid}_v.jpg"
+        if not os.path.exists(raw):
+            im = Image.open(f"{DATA}/strikingly_shorts/{n:02d}.jpg").convert("RGB")
+            im.crop((0, 0, im.width, int(im.height * 0.86))).save(raw, quality=90)
+        w = {"id": nid, "t": title, "ch": "PressPlay Academy", "d": "", "v": views, "s": 0,
+             "group": "PressPlay Academy", "role": "拍攝、剪輯", "xp": plat, "xv": views, "xlink": link, "only": plat}
+        if who: w["person"] = who
+        works["short"].append(w); sbyid[nid] = w
+
 for i in perform_ids:
     if i in D: works["perform"].append(base(i))
 for i in voice_ids:

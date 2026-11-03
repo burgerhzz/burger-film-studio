@@ -101,6 +101,7 @@ section.block{padding-block:56px 8px}
 .th::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 60%,rgba(0,0,0,.55));transition:opacity .2s}
 .th.v::after{background:linear-gradient(transparent 65%,rgba(0,0,0,.7))}
 .th .views,.th .dur{z-index:1}
+.th .views i{font-style:normal;font-family:var(--display);font-size:10px;font-weight:700;letter-spacing:.04em;background:rgba(0,0,0,.55);padding:1px 5px;border-radius:3px;margin-left:2px}
 .th .person{position:absolute;top:8px;left:8px;z-index:1;font-size:12px;font-weight:700;background:var(--fg);color:var(--bg);padding:2px 9px;border-radius:999px}
 
 /* work card */
@@ -310,7 +311,7 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
   </section>
 
   <section class="block wrap" id="shorts">
-    <div class="head"><h2><small>短影音</small>Shorts</h2><p>直式短片的拍攝與剪輯。名人合作置頂，其餘依觀看數排序。</p></div>
+    <div class="head"><h2><small>短影音</small>Shorts</h2><p>直式短片的拍攝與剪輯，同一支在 YouTube、IG、TikTok 都有發布時，顯示觀看數最高的平台。名人合作置頂，其餘依觀看數排序。</p></div>
     <div class="chips" id="shortChips" role="group" aria-label="篩選短影音"></div>
     <div class="masonry v" id="shortGrid"></div>
     <div class="more"><button type="button" id="shortMore">顯示更多</button></div>
@@ -366,7 +367,7 @@ const SER = Object.fromEntries(DATA.series.map(s => [s.key, s]));
 const BLURB = __BLURB__;
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const fmtV = n => n >= 10000 ? (n/10000).toFixed(n >= 1e6 ? 0 : 1).replace(/\.0$/,'') + '萬' : n.toLocaleString('en');
+const fmtV = n => n >= 10000 ? (n/10000).toFixed(1).replace(/\.0$/,'') + '萬' : n.toLocaleString('en');
 const fmtD = d => d ? d.slice(0,7).replace('-', '/') : '';
 const fmtS = s => s >= 3600 ? `${Math.floor(s/3600)}:${String(Math.floor(s%3600/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}` : `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
 const clean = t => t.replace(/[｜|]?\s*#\S+/g, '').replace(/\s+/g, ' ').trim() || t;
@@ -384,16 +385,25 @@ function longCard(w, opts = {}){
     <span class="meta">${opts.series !== false && s ? `<span class="sr">${esc(s.name)}</span>` : ''}<span>${fmtD(w.d)}</span>${opts.channel ? `<span>${esc(w.ch)}</span>` : ''}</span>
     <h3>${esc(w.t)}</h3>${w.role && opts.role !== false ? `<p class="role">${esc(w.role)}</p>` : ''}</a>`;
 }
+// 短影音取各平台中觀看數最高的版本（IG／TikTok 數字來自舊作品集截圖）
+function best(w){
+  if (w.xv && (w.only || w.xv > w.v)) {
+    const code = (w.xlink.match(/\/(?:reel|video)\/([^/?]+)/) || [])[1];
+    const embed = w.xp === 'IG' ? `https://www.instagram.com/reel/${code}/embed/` : `https://www.tiktok.com/player/v1/${code}?autoplay=1&description=0&music_info=0`;
+    return {v: w.xv, plat: w.xp, href: w.xlink, embed};
+  }
+  return {v: w.v, plat: '', href: url(w, true), embed: `https://www.youtube-nocookie.com/embed/${w.id}?autoplay=1&rel=0&playsinline=1`};
+}
 function shortCard(w){
-  return `<a class="w s" href="${url(w, true)}" target="_blank" rel="noopener" data-id="${w.id}" data-v="1">
-    <span class="th v" style="${sprite(w.id,'v')}">${w.person ? `<span class="person">${esc(w.person)}</span>` : ''}<span class="views">${fmtV(w.v)}</span></span>
+  const b = best(w);
+  return `<a class="w s" href="${b.href}" target="_blank" rel="noopener" data-id="${w.id}" data-v="1" data-embed="${esc(b.embed)}">
+    <span class="th v" style="${sprite(w.id,'v')}">${w.person ? `<span class="person">${esc(w.person)}</span>` : ''}<span class="views">${fmtV(b.v)}${b.plat ? `<i>${b.plat}</i>` : ''}</span></span>
     <h3>${esc(clean(w.t))}</h3><p class="role">${esc(w.role)}</p></a>`;
 }
 
 // stats
 const all = [...W.long, ...W.short];
-const top = Math.max(...all.map(w => w.v));
-const firstYear = Math.min(...all.map(w => +w.d.slice(0,4)).filter(Boolean));
+const top = Math.max(...all.map(w => Math.max(w.v, w.xv || 0)));
 $('stats').innerHTML = [
   [W.long.length, '支長影音'], [W.short.length, '支短影音'],
   [new Set(W.long.map(w => w.series)).size, '個節目系列'], [fmtV(top), '單支最高觀看'],
@@ -409,7 +419,7 @@ $('featGrid').innerHTML = W.long.filter(w => 'feat' in w).sort((a,b) => a.feat -
   </a>`).join('');
 
 // shorts
-const shortsSorted = [...W.short].sort((a,b) => (('pin' in a) ? a.pin : 999) - (('pin' in b) ? b.pin : 999) || b.v - a.v);
+const shortsSorted = [...W.short].sort((a,b) => (('pin' in a) ? a.pin : 999) - (('pin' in b) ? b.pin : 999) || best(b).v - best(a).v);
 const groups = [...new Set(shortsSorted.map(w => w.group))];
 let shortFilter = '全部', shortShown = 30;
 function renderShorts(){
@@ -488,7 +498,8 @@ document.addEventListener('click', e => {
   e.preventDefault();
   player.classList.toggle('v', !!a.dataset.v);
   $('plLink').href = a.href;
-  $('plFrame').innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${a.dataset.id}?autoplay=1&rel=0&playsinline=1" title="YouTube 播放器" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  const src = a.dataset.embed || `https://www.youtube-nocookie.com/embed/${a.dataset.id}?autoplay=1&rel=0&playsinline=1`;
+  $('plFrame').innerHTML = `<iframe src="${src}" title="YouTube 播放器" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
   if (dlg.open) dlg.close();
   player.showModal();
 });
