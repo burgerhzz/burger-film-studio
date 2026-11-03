@@ -218,7 +218,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
 .pl-frame iframe{width:100%;height:100%;border:0;display:block}
 
 /* about */
-.about{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px 64px}
+.about{display:grid;grid-template-columns:minmax(0,1fr);max-width:860px}
 /* 經歷：垂直時間軸，線條由上往下延伸，到節點時該列滑入 */
 .tl-wrap{position:relative;padding-left:34px}
 .tl-track,.tl-fill{position:absolute;left:5px;top:26px;bottom:26px;width:2px;border-radius:2px}
@@ -231,9 +231,21 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
 .tl h3{margin:0;font-size:17px;font-weight:700}
 .tl h3 small{font-weight:400;color:var(--muted);font-size:14px;margin-left:6px}
 .tl p{margin:4px 0 0;color:var(--muted);font-size:14px}
-.skills{display:grid;gap:22px}
-.skills h3{margin:0 0 8px;font-size:13px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:400}
-.skills p{margin:0;font-size:14.5px}
+/* 能力與工具：兩排卡片無限循環，上排往左、下排往右，滑鼠移上去兩排都暫停 */
+.cw{margin-top:48px;display:grid;gap:14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.cw-label{margin:0 0 4px;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.02em}
+.cw-label span{color:var(--muted);font-weight:500;margin-left:6px}
+.cw-row{overflow:hidden}
+.cw-track{display:flex;width:max-content;animation:cw 48s linear infinite}
+.cw-row.rev .cw-track{animation-direction:reverse;animation-duration:56s}
+.cw:hover .cw-track{animation-play-state:paused}
+.cw-track ul{display:flex;gap:14px;padding:0 14px 0 0;margin:0;list-style:none}
+.cw-card{flex:none;min-width:190px;padding:16px 20px;background:var(--surface);border:1px solid var(--line-2);border-radius:14px;display:grid;gap:4px;align-content:start}
+.cw-card .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--dim)}
+.cw-card b{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em;line-height:1.2;white-space:nowrap}
+.cw-card .sub{font-size:13px;color:var(--muted);white-space:nowrap}
+@keyframes cw{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.cw-track{animation:none}.cw-row{overflow-x:auto}.cw-track ul[aria-hidden]{display:none}}
 
 /* contact */
 .contact{padding-block:72px 40px;text-align:center}
@@ -248,7 +260,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
 footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:center;border-top:1px solid var(--line)}
 
 @media (max-width:860px){
-  .intro,.about{grid-template-columns:minmax(0,1fr)}
+  .intro{grid-template-columns:minmax(0,1fr)}
   .nav ul{display:none}
 }
 @media (max-width:520px){
@@ -295,8 +307,8 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
   <div class="stats" id="stats"></div>
 </div>
 
-<div class="wrap marquee-wrap" aria-label="服務項目">
-  <div class="marquee"><div class="mq-track"><ul><li><span>影片剪輯</span><em>Video Editing</em></li><li><span>節目企劃</span><em>Show Planning</em></li><li><span>拍攝</span><em>Filming</em></li><li><span>收音</span><em>Sound Recording</em></li><li><span>視覺動畫</span><em>Motion Graphics</em></li><li><span>調色</span><em>Color Grading</em></li><li><span>短影音</span><em>Short-form Video</em></li><li><span>Podcast 影音版</span><em>Video Podcast</em></li><li><span>直播</span><em>Live Streaming</em></li><li><span>封面設計</span><em>Thumbnail Design</em></li><li><span>AI 工具開發</span><em>AI Tool Development</em></li><li><span>自動字幕</span><em>Auto Subtitles</em></li></ul><ul aria-hidden="true"><li><span>影片剪輯</span><em>Video Editing</em></li><li><span>節目企劃</span><em>Show Planning</em></li><li><span>拍攝</span><em>Filming</em></li><li><span>收音</span><em>Sound Recording</em></li><li><span>視覺動畫</span><em>Motion Graphics</em></li><li><span>調色</span><em>Color Grading</em></li><li><span>短影音</span><em>Short-form Video</em></li><li><span>Podcast 影音版</span><em>Video Podcast</em></li><li><span>直播</span><em>Live Streaming</em></li><li><span>封面設計</span><em>Thumbnail Design</em></li><li><span>AI 工具開發</span><em>AI Tool Development</em></li><li><span>自動字幕</span><em>Auto Subtitles</em></li></ul></div></div>
+<div class="wrap marquee-wrap" aria-label="合作過的頻道與品牌">
+  <div class="marquee"><div class="mq-track"><ul><li><span>初日醫學</span><em>Cofit</em></li><li><span>PressPlay Academy</span></li><li><span>達康.come笑Tube</span></li><li><span>小老婆汽機車資訊網</span><em>Jorsindo Motor Club</em></li><li><span>火花羅</span><em>Sparklo</em></li><li><span>興趣使然的攝影師</span><em>Enzo</em></li><li><span>LEE-JING 李靜</span></li><li><span>大久保麻梨子</span><em>Mariko Okubo</em></li><li><span>安筌運轉</span></li><li><span>集合囉！</span><em>Play Boy Station</em></li><li><span>簡少年</span></li><li><span>今天有 Corn</span></li></ul><ul aria-hidden="true"><li><span>初日醫學</span><em>Cofit</em></li><li><span>PressPlay Academy</span></li><li><span>達康.come笑Tube</span></li><li><span>小老婆汽機車資訊網</span><em>Jorsindo Motor Club</em></li><li><span>火花羅</span><em>Sparklo</em></li><li><span>興趣使然的攝影師</span><em>Enzo</em></li><li><span>LEE-JING 李靜</span></li><li><span>大久保麻梨子</span><em>Mariko Okubo</em></li><li><span>安筌運轉</span></li><li><span>集合囉！</span><em>Play Boy Station</em></li><li><span>簡少年</span></li><li><span>今天有 Corn</span></li></ul></div></div>
 </div>
 
 <main>
@@ -311,12 +323,11 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
         <li><span class="dot" aria-hidden="true"></span><span class="when">2017/2 – 2020/8</span><div><h3>小老婆汽機車資訊網<small>影音編輯</small></h3><p>拍攝、剪輯、頻道管理、演出、配音。</p></div></li>
       </ol>
       </div>
-      <div class="skills">
-        <div><h3>現場</h3><p>室內外拍攝、燈光、收音、場佈、綠幕、道具</p></div>
-        <div><h3>後製</h3><p>剪輯、調色、視覺動畫設計、字卡、片頭片尾</p></div>
-        <div><h3>軟體</h3><p>Premiere Pro、After Effects、DaVinci Resolve、Photoshop、Illustrator</p></div>
-        <div><h3>器材</h3><p>Sony Z190、Z150、A7IV、A7III、A7S3、A7S2；GoPro 6–10、DJI OSMO、DJI RS4；Edelkrone Wing PRO、YC Onion</p></div>
-      </div>
+    </div>
+    <div class="cw" aria-label="能力與工具">
+      <p class="cw-label">能力與工具 <span>Skills &amp; Gear</span></p>
+      <div class="cw-row"><div class="cw-track"><ul><li class="cw-card"><span class="tag">現場</span><b>室內外拍攝</b><span class="sub">On-location Filming</span></li><li class="cw-card"><span class="tag">現場</span><b>燈光</b><span class="sub">Lighting</span></li><li class="cw-card"><span class="tag">現場</span><b>收音</b><span class="sub">Sound Recording</span></li><li class="cw-card"><span class="tag">現場</span><b>場佈</b><span class="sub">Set Dressing</span></li><li class="cw-card"><span class="tag">現場</span><b>綠幕</b><span class="sub">Green Screen</span></li><li class="cw-card"><span class="tag">現場</span><b>道具</b><span class="sub">Props</span></li><li class="cw-card"><span class="tag">後製</span><b>剪輯</b><span class="sub">Editing</span></li><li class="cw-card"><span class="tag">後製</span><b>調色</b><span class="sub">Color Grading</span></li><li class="cw-card"><span class="tag">後製</span><b>視覺動畫</b><span class="sub">Motion Graphics</span></li><li class="cw-card"><span class="tag">後製</span><b>字卡</b><span class="sub">Captions</span></li><li class="cw-card"><span class="tag">後製</span><b>片頭片尾</b><span class="sub">Intro &amp; Outro</span></li></ul><ul aria-hidden="true"><li class="cw-card"><span class="tag">現場</span><b>室內外拍攝</b><span class="sub">On-location Filming</span></li><li class="cw-card"><span class="tag">現場</span><b>燈光</b><span class="sub">Lighting</span></li><li class="cw-card"><span class="tag">現場</span><b>收音</b><span class="sub">Sound Recording</span></li><li class="cw-card"><span class="tag">現場</span><b>場佈</b><span class="sub">Set Dressing</span></li><li class="cw-card"><span class="tag">現場</span><b>綠幕</b><span class="sub">Green Screen</span></li><li class="cw-card"><span class="tag">現場</span><b>道具</b><span class="sub">Props</span></li><li class="cw-card"><span class="tag">後製</span><b>剪輯</b><span class="sub">Editing</span></li><li class="cw-card"><span class="tag">後製</span><b>調色</b><span class="sub">Color Grading</span></li><li class="cw-card"><span class="tag">後製</span><b>視覺動畫</b><span class="sub">Motion Graphics</span></li><li class="cw-card"><span class="tag">後製</span><b>字卡</b><span class="sub">Captions</span></li><li class="cw-card"><span class="tag">後製</span><b>片頭片尾</b><span class="sub">Intro &amp; Outro</span></li></ul></div></div>
+      <div class="cw-row rev"><div class="cw-track"><ul><li class="cw-card"><span class="tag">軟體</span><b>Premiere Pro</b><span class="sub">Adobe</span></li><li class="cw-card"><span class="tag">軟體</span><b>After Effects</b><span class="sub">Adobe</span></li><li class="cw-card"><span class="tag">軟體</span><b>DaVinci Resolve</b><span class="sub">Blackmagic Design</span></li><li class="cw-card"><span class="tag">軟體</span><b>Photoshop</b><span class="sub">Adobe</span></li><li class="cw-card"><span class="tag">軟體</span><b>Illustrator</b><span class="sub">Adobe</span></li><li class="cw-card"><span class="tag">攝影機</span><b>Sony Z190／Z150</b><span class="sub">4K 手持攝影機</span></li><li class="cw-card"><span class="tag">相機</span><b>Sony A7IV／A7III</b><span class="sub">全片幅無反</span></li><li class="cw-card"><span class="tag">相機</span><b>Sony A7S3／A7S2</b><span class="sub">全片幅無反</span></li><li class="cw-card"><span class="tag">運動相機</span><b>GoPro 6–10</b></li><li class="cw-card"><span class="tag">穩定器</span><b>DJI OSMO</b></li><li class="cw-card"><span class="tag">穩定器</span><b>DJI RS4</b></li><li class="cw-card"><span class="tag">滑軌</span><b>Edelkrone Wing PRO</b></li><li class="cw-card"><span class="tag">滑軌</span><b>YC Onion</b></li></ul><ul aria-hidden="true"><li class="cw-card"><span class="tag">軟體</span><b>Premiere Pro</b><span class="sub">Adobe</span></li><li class="cw-card"><span class="tag">軟體</span><b>After Effects</b><span class="sub">Adobe</span></li><li class="cw-card"><span class="tag">軟體</span><b>DaVinci Resolve</b><span class="sub">Blackmagic Design</span></li><li class="cw-card"><span class="tag">軟體</span><b>Photoshop</b><span class="sub">Adobe</span></li><li class="cw-card"><span class="tag">軟體</span><b>Illustrator</b><span class="sub">Adobe</span></li><li class="cw-card"><span class="tag">攝影機</span><b>Sony Z190／Z150</b><span class="sub">4K 手持攝影機</span></li><li class="cw-card"><span class="tag">相機</span><b>Sony A7IV／A7III</b><span class="sub">全片幅無反</span></li><li class="cw-card"><span class="tag">相機</span><b>Sony A7S3／A7S2</b><span class="sub">全片幅無反</span></li><li class="cw-card"><span class="tag">運動相機</span><b>GoPro 6–10</b></li><li class="cw-card"><span class="tag">穩定器</span><b>DJI OSMO</b></li><li class="cw-card"><span class="tag">穩定器</span><b>DJI RS4</b></li><li class="cw-card"><span class="tag">滑軌</span><b>Edelkrone Wing PRO</b></li><li class="cw-card"><span class="tag">滑軌</span><b>YC Onion</b></li></ul></div></div>
     </div>
   </section>
 
