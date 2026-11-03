@@ -9,14 +9,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA, SITE = f"{ROOT}/data", f"{ROOT}/site"
 os.makedirs(f"{SITE}/sprites", exist_ok=True); os.makedirs(f"{DATA}/thumbs_raw", exist_ok=True)
 # 精選：以出鏡人物的知名度為主（她 11/3 指定），(影片 ID, 顯示的人名)
-FEATURED = [
-    ("goeUtfe5wiU", "陳永儀博士"),
-    ("xFAHxgq8BI4", "瓦基"),
-    ("Y5feeDqTcAQ", "ROLAND 羅蘭"),
-    ("am4VsQIHdfA", "阿基師"),
-    ("UJkHlNDEJUo", "阿部瑪利亞"),
-    ("nSfwU_ccPKA", "許藍方"),
-    ("Atnpqw0sRM8", "達康.come"),
+FEATURED = [  # (影片 ID, 顯示的人名, 人臉在縮圖中的水平位置 0–1)
+    ("goeUtfe5wiU", "宋晏仁醫師", 0.83),
+    ("xFAHxgq8BI4", "瓦基", 0.85),
+    ("Y5feeDqTcAQ", "ROLAND 羅蘭", 0.66),
+    ("am4VsQIHdfA", "阿基師", 0.78),
+    ("UJkHlNDEJUo", "阿部瑪利亞", 0.50),
+    ("nSfwU_ccPKA", "許藍方", 0.87),
+    ("Atnpqw0sRM8", "達康.come", 0.72),
 ]
 # 短影音最上面固定的名人區
 SHORT_PIN = [
@@ -53,8 +53,8 @@ for i in pool_long:
     w = base(i); w.update(series=key, role=role)
     works["long"].append(w)
 byid = {w["id"]: w for w in works["long"]}
-for n, (i, who) in enumerate(FEATURED):
-    byid[i]["feat"] = n; byid[i]["person"] = who
+for n, (i, who, fx) in enumerate(FEATURED):
+    byid[i]["feat"] = n; byid[i]["person"] = who; byid[i]["fx"] = fx
 
 def short_group(d):
     c = d["channel"]
