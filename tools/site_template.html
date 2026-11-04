@@ -305,7 +305,7 @@ html.has-cur,html.has-cur *{cursor:none!important}
 /* 展開：被點的那張佔滿整區，其他卡片隱藏（GSAP Flip 補間） */
 .steps.has-open .step:not(.open),.steps.has-open .step-note{display:none}
 .steps.has-open{grid-template-columns:minmax(0,1fr)}
-.step.open{grid-area:1/1/-1/-1;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;padding:16px;align-items:start}
+.step.open{grid-area:1/1/-1/-1;align-self:start;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;padding:16px;align-items:start}
 .step.open:after{display:none}
 .step.open .step-hit{display:none}
 .step.open .step-x{display:block}
@@ -824,13 +824,13 @@ player.addEventListener('close', () => { $('plFrame').innerHTML = ''; });
       const fit = () => { const top = box.getBoundingClientRect().top; let mb = 0;
         cards.forEach(c => { if (c.offsetParent === null || +getComputedStyle(c).opacity < .05) return; mb = Math.max(mb, c.getBoundingClientRect().bottom - top); });
         box.style.height = Math.max(hv.h, mb) + 'px'; };
+      // 先讓 Flip 記下正確的最終大小，再鎖容器高度（反過來的話卡片會被撐成舊容器的高度）
+      Flip.from(state, { duration: .6, ease: 'power2.inOut', absolute: true, nested: true, scale: false, onUpdate: fit,
+        onEnter: els => gsap.fromTo(els, { opacity: 0 }, { opacity: 1, duration: .35, delay: .3 }),
+        onLeave: els => gsap.to(els, { opacity: 0, duration: .25 }),
+        onComplete: () => { box.style.height = ''; } });
       box.style.height = h0 + 'px';
       gsap.to(hv, { h: h1, duration: .6, ease: 'power2.inOut', onUpdate: fit });
-      gsap.delayedCall(.75, () => { box.style.height = ''; });
-      Flip.from(state, { duration: .6, ease: 'power2.inOut', absolute: true, nested: true, scale: false,
-        onUpdate: fit,
-        onEnter: els => gsap.fromTo(els, { opacity: 0 }, { opacity: 1, duration: .35, delay: .3 }),
-        onLeave: els => gsap.to(els, { opacity: 0, duration: .25 }) });
       const now = box.querySelector('.step.open');
       if (now) gsap.fromTo(now.querySelectorAll('.step-more > *, .step-x'), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .4, stagger: .08, delay: .4, ease: 'power2.out' });
     }
