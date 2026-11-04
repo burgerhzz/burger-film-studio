@@ -1,0 +1,47 @@
+<!doctype html><meta charset="utf-8">
+<!-- 步驟②自動粗剪示意：三機用聲音對時 → 依兩支 mic 音量切特寫、切 mic。黑底、白／灰＋黃。示意圖，不是真實波形。window.setT(t) -->
+<style>
+html,body{margin:0;width:1920px;height:1080px;background:#000;overflow:hidden;color:#fff;font-family:"PingFang TC","Noto Sans TC",sans-serif}
+.hd{position:absolute;left:160px;top:90px;font:500 26px/1 "Helvetica Neue",sans-serif;letter-spacing:.14em;color:#666}
+.hd b{color:#fff;font-weight:600}
+.st{position:absolute;left:160px;top:150px;font-size:40px;font-weight:600}
+.st i{font-style:normal;color:#ffe600;margin-right:18px;font-family:"Helvetica Neue",sans-serif}
+.lane{position:absolute;left:420px;width:1340px;height:70px}
+.lab{position:absolute;left:160px;width:240px;height:70px;display:flex;align-items:center;font-size:24px;color:#888}
+.bar{position:absolute;top:8px;height:54px;border-radius:6px;background:#1d1d1d;border:1px solid #333;overflow:hidden}
+svg{position:absolute;left:0;top:0}
+.blk{position:absolute;top:8px;height:54px;border-radius:6px;display:flex;align-items:center;padding-left:14px;font-size:22px;font-weight:600;color:#000;opacity:0;overflow:hidden;white-space:nowrap}
+#ph{position:absolute;top:250px;width:3px;height:690px;background:#ffe600;left:420px}
+.mic{position:absolute;right:160px;font:600 20px/1 "Helvetica Neue",sans-serif;letter-spacing:.1em;padding:6px 10px;border-radius:4px}
+</style>
+<div class="hd"><b>自動粗剪</b>　示意</div>
+<div class="st" id="st"></div>
+<div id="L"></div><div id="ph"></div>
+<script>
+const W=1340,X0=420,TL=24; // 時間軸 24 秒
+const turns=[[0,5,1],[5,6.2,0],[6.2,12,2],[12,13,0],[13,18,1],[18,24,2]]; // 0=沒人講／重疊 1=主持人 2=來賓
+const x=s=>s/TL*W;
+const L=document.getElementById('L');
+const mk=(cls,html,top)=>{const d=document.createElement('div');d.className=cls;d.style.top=top+'px';d.innerHTML=html;L.appendChild(d);return d};
+const wave=(seed,amp,who)=>{let p='M0,27';for(let i=0;i<W;i+=4){const s=i/W*TL,t=turns.find(q=>s>=q[0]&&s<q[1]);const on=who===undefined?1:(t[2]===who?1:.12);
+  const v=Math.sin(i*.11+seed)*Math.sin(i*.023+seed*2)*amp*on;p+=` L${i},${27+v}`}return p};
+const lanes=[['A 機　雙人全景',260,0,0],['B 機　主持人',340,1,90],['C 機　來賓',420,2,-120]];
+const bars=lanes.map(([n,top,k,off])=>{mk('lab',n,top);const ln=mk('lane','',top);ln.innerHTML=`<div class="bar" style="left:0;width:${W}px"><svg width="${W}" height="54"><path d="${wave(k*1.7,18)}" fill="none" stroke="#666" stroke-width="2"/></svg></div>`;return {b:ln.querySelector('.bar'),off}});
+mk('lab','CH1　主持人 mic',540);const m1=mk('lane',`<div class="bar" style="left:0;width:${W}px"><svg width="${W}" height="54"><path d="${wave(3,22,1)}" fill="none" stroke="#fff" stroke-width="2"/></svg></div>`,540);
+mk('lab','CH2　來賓 mic',620);const m2=mk('lane',`<div class="bar" style="left:0;width:${W}px"><svg width="${W}" height="54"><path d="${wave(5,22,2)}" fill="none" stroke="#fff" stroke-width="2"/></svg></div>`,620);
+mk('lab','<b style="color:#fff">輸出序列</b>',760);const out=mk('lane','',760);
+const NAME=['A 全景','B 主持人特寫','C 來賓特寫'],COL=['#bdbdbd','#ffe600','#ffffff'];
+const blks=turns.map(([a,b,k])=>{const d=document.createElement('div');d.className='blk';d.style.left=x(a)+'px';d.style.width=(x(b)-x(a)-4)+'px';d.style.background=COL[k];d.textContent=NAME[k];out.appendChild(d);return {a,b,k,d}});
+const st=document.getElementById('st'),ph=document.getElementById('ph');
+const cl=v=>Math.max(0,Math.min(1,v)),e3=v=>1-Math.pow(1-v,3);
+window.setT=t=>{
+  // 0–2.6s：B、C 機的時間差用聲音對齊
+  const k=e3(cl((t-.6)/1.4));bars.forEach(({b,off})=>b.style.transform=`translateX(${off*(1-k)}px)`);
+  st.innerHTML=t<2.8?'<i>1</i>三台攝影機用聲音自動對時':'<i>2</i>誰在講話就切誰的特寫，另一支 mic 靜音';
+  // 2.8–9.6s：播放頭掃過，依 mic 切鏡頭
+  const s=TL*cl((t-2.8)/6.8);ph.style.left=(X0+x(s))+'px';ph.style.opacity=t<2.8?0:1;
+  blks.forEach(o=>{const u=cl((s-o.a)/.8);o.d.style.opacity=u;o.d.style.width=(Math.max(0,Math.min(s,o.b)-o.a)/TL*W-4)+'px'});
+  const cur=turns.find(q=>s>=q[0]&&s<q[1])||turns[0];
+  m1.style.opacity=t<2.8||cur[2]!==2?1:.35;m2.style.opacity=t<2.8||cur[2]!==1?1:.35;
+};
+</script>

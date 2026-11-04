@@ -1,0 +1,35 @@
+<!doctype html><meta charset="utf-8">
+<!-- 步驟①字幕依腳本校正：EP5 真實校正例（burgersub_C043C007_261007BF_002 → _校正 → _校正_去重複）。黑底，錯字灰色劃掉、改成黃字。window.setT(t) -->
+<style>
+html,body{margin:0;width:1920px;height:1080px;background:#000;overflow:hidden;color:#fff;font-family:"PingFang TC","Noto Sans TC",sans-serif}
+.hd{position:absolute;left:160px;top:96px;font:500 26px/1 "Helvetica Neue",sans-serif;letter-spacing:.14em;color:#666}
+.hd b{color:#fff;font-weight:600}
+.row{position:absolute;left:160px;right:160px;height:96px;display:flex;align-items:center;gap:40px;border-bottom:1px solid #1c1c1c;opacity:0}
+.tc{font:500 24px/1 "Helvetica Neue",monospace;color:#555;width:150px;flex:none}
+.tx{font-size:46px;font-weight:600;white-space:nowrap}
+.w{position:relative;display:inline-block}
+.w .o{color:#777}
+.w .o:after{content:"";position:absolute;left:-2px;right:-2px;top:52%;height:4px;background:#999;transform-origin:0 50%;transform:scaleX(var(--s,0))}
+.w .n{display:inline-block;color:#ffe600;max-width:0;overflow:hidden;vertical-align:bottom;white-space:nowrap}
+.sum{position:absolute;left:160px;right:160px;bottom:96px;display:flex;gap:64px;font-size:30px;color:#999;opacity:0}
+.sum b{display:block;font:700 72px/1.1 "Helvetica Neue",sans-serif;color:#fff}
+.sum .y b{color:#ffe600}
+</style>
+<div class="hd"><b>EP5 蛋白質</b>　字幕依腳本校正</div>
+<div id="rows"></div>
+<div class="sum" id="sum"><div><b>1,061</b>原始字幕</div><div class="y"><b>161</b>依腳本改錯字</div><div><b>−242</b>重錄只留最後一版</div><div><b>819</b>交給剪輯</div></div>
+<script>
+const R=[['01:15','[送幸玩|重訓完]喝一杯'],['01:20','每天喝蛋白粉就代表[不對了|補對了]嗎'],['02:48','邀請到[出日|初日]診所的[李湯悅|李唐越]醫師'],
+['04:35','蛋白質[健益量|建議量]大概可以用每公斤體重'],['10:55','不代表會自動變成[雞肉|肌肉]'],['11:03','需要靠蛋白質和[精酸|胺基酸]帶來刺激'],['11:09','研究裡的[合成組康|合成阻抗]']];
+const box=document.getElementById('rows');
+const rows=R.map(([tc,s],i)=>{const d=document.createElement('div');d.className='row';d.style.top=(170+i*100)+'px';
+  d.innerHTML=`<span class="tc">${tc}</span><span class="tx">${s.replace(/\[([^|]+)\|([^\]]+)\]/g,'<span class="w"><span class="o">$1</span><span class="n">$2</span></span>')}</span>`;box.appendChild(d);return d});
+const cl=x=>Math.max(0,Math.min(1,x)),e3=x=>1-Math.pow(1-x,3);
+window.setT=t=>{
+  rows.forEach((d,i)=>{const a=.3+i*.75;d.style.opacity=e3(cl((t-a)/.3))*(1-cl((t-7.2)/.4));d.style.transform=`translateY(${(1-e3(cl((t-a)/.3)))*20}px)`;
+    d.querySelectorAll('.w').forEach((w,j)=>{const b=a+.45+j*.35,k=e3(cl((t-b)/.3)),m=e3(cl((t-b-.25)/.35));
+      w.querySelector('.o').style.setProperty('--s',k);w.querySelector('.o').style.opacity=1-.4*m;
+      const n=w.querySelector('.n');n.style.maxWidth=(m*6)+'em';n.style.marginLeft=(m*.25)+'em';});});
+  const s=document.getElementById('sum');s.style.opacity=e3(cl((t-7.4)/.5));
+};
+</script>
