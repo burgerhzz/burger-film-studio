@@ -12,7 +12,7 @@ SALES = "https://burgerhzz.github.io/"
 
 TOOLS = [
     {
-        "slug": "burgersub", "name": "burgerSub", "sub": "本機自動字幕", "kind": "Premiere Pro 擴充 · Mac App",
+        "slug": "burgersub", "name": "burgerSub", "sub": "台灣狗以字幕生成", "kind": "Premiere Pro 擴充 · Mac App",
         "before": "以前做字幕要先丟到剪映生成，出來是簡體，要再轉成繁體，最後把 SRT 匯進 Premiere。"
                   "台灣的說法也常常聽錯，像「欸」會變成「哎」。口音、語速、背景音一有變化，錯字就跟著變多，每一關都要手動處理。",
         "how": [
@@ -87,7 +87,7 @@ UI = {
 }
 
 TOOLS_EN = [
- {"slug": "burgersub", "name": "burgerSub", "sub": "On-device auto subtitles", "kind": "Premiere Pro extension · Mac app",
+ {"slug": "burgersub", "name": "burgerSub", "sub": "Taiwanese subtitle generation", "kind": "Premiere Pro extension · Mac app",
   "before": "Subtitles used to mean running the audio through CapCut, converting the Simplified Chinese output to Traditional, then importing the SRT into Premiere. Taiwanese expressions were often misheard (欸 came out as 哎), and any change in accent, pace or background noise meant more errors to fix by hand at every step.",
   "how": [("Never leave Premiere", "It reads the audio straight from the timeline. If an hour of footage is cut down to three minutes, only those three minutes get transcribed."),
           ("No more conversion", "A speech model trained for Taiwanese Mandarin outputs Traditional Chinese directly, and 欸 is no longer heard as 哎."),

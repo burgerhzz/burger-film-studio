@@ -45,7 +45,7 @@ EN = {
 "剪片時一直重複在做的事，我用 AI 協作寫成工具。每個都是工作上真的需要才做的，現在還每天在用，邊用邊改。":
   "The things I kept doing over and over while editing, I turned into tools with AI. Each one came from a real need at work, and I still use them every day.",
 "Premiere Pro 擴充 · Mac App": "Premiere Pro extension · Mac app", "Premiere Pro 擴充": "Premiere Pro extension", "macOS App": "macOS app",
-"本機自動字幕": "On-device auto subtitles", "在 Premiere 裡直接產生並編輯字幕，全程在本機跑，不用上傳素材。": "Generate and edit subtitles right inside Premiere. Everything runs locally; no uploads.",
+"台灣狗以字幕生成": "Taiwanese subtitle generation", "在 Premiere 裡直接產生並編輯字幕，全程在本機跑，不用上傳素材。": "Generate and edit subtitles right inside Premiere. Everything runs locally; no uploads.",
 "台灣華語語音辨識，原生繁體": "Speech recognition for Taiwanese Mandarin, Traditional Chinese output", "繁中斷詞，依語意斷行": "Line breaks follow word boundaries", "可用腳本文檔對位校正": "Align subtitles to an existing script", "另有 Mac 獨立版 burgerSub Studio": "Standalone Mac version: burgerSub Studio",
 "看介紹 →": "Learn more →",
 "字幕要先": "Subtitles took three steps:", "1. 剪映生成字幕": "1. generate subtitles in CapCut", "2. 簡轉繁": "2. convert to Traditional Chinese", "3. 再匯進 Pr": "3. import into Premiere", "台灣口語還常聽錯，校正很花時間": "Taiwanese expressions were often misheard, so proofreading took ages",
