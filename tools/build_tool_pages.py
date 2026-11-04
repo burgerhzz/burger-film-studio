@@ -29,7 +29,7 @@ TOOLS = [
         "status": "2026 年 10 月發布 1.0 版。全程在本機跑，音訊不會離開電腦，也沒有用量費用。",
     },
     {
-        "slug": "burgerbo", "name": "burgerbo", "sub": "YouTube 影片直接匯入 Pr", "kind": "Premiere Pro 擴充",
+        "slug": "burgerbo", "name": "burgerbo", "sub": "YouTube 影片直接匯入 Premiere", "kind": "Premiere Pro 擴充",
         "before": "剪片常需要引用網路上的影片片段當素材。以前要找下載網站、下載、畫質或編碼不對還要轉檔、匯入專案、拖上時間軸，每一支都重來一次。",
         "how": [
             ("一次完成", "在 Premiere 面板貼上網址、選好解析度，下載、轉碼、匯入、放上時間軸一次完成。"),
