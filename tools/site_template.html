@@ -813,13 +813,23 @@ player.addEventListener('close', () => { $('plFrame').innerHTML = ''; });
   const play = (c, on) => { const v = c.querySelector('video'); if (on) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); c.classList.add('playing'); } else { v.pause(); c.classList.remove('playing'); } };
   const set = (card) => {
     const open = box.querySelector('.step.open');
+    const h0 = box.offsetHeight;
     const state = calm ? null : Flip.getState([...cards, ...cards.map(c => c.querySelector('.step-media')), ...cards.map(c => c.querySelector('.step-body'))]);
     if (open) { open.classList.remove('open'); open.querySelector('.step-hit').setAttribute('aria-expanded', 'false'); }
     if (card && card !== open) { card.classList.add('open'); card.querySelector('.step-hit').setAttribute('aria-expanded', 'true'); play(card, true); }
     box.classList.toggle('has-open', !!box.querySelector('.step.open'));
     if (!calm) {
+      // Flip 動畫期間卡片會變成絕對定位，容器高度會瞬間塌成 0、下面的區塊跟著跳上來；先鎖住舊高度，再和卡片一起補間到新高度
+      const h1 = box.offsetHeight, hv = { h: h0 };
+      const fit = () => { const top = box.getBoundingClientRect().top; let mb = 0;
+        cards.forEach(c => { if (c.offsetParent === null || +getComputedStyle(c).opacity < .05) return; mb = Math.max(mb, c.getBoundingClientRect().bottom - top); });
+        box.style.height = Math.max(hv.h, mb) + 'px'; };
+      box.style.height = h0 + 'px';
+      gsap.to(hv, { h: h1, duration: .6, ease: 'power2.inOut', onUpdate: fit });
+      gsap.delayedCall(.75, () => { box.style.height = ''; });
       Flip.from(state, { duration: .6, ease: 'power2.inOut', absolute: true, nested: true, scale: false,
-        onEnter: els => gsap.fromTo(els, { opacity: 0 }, { opacity: 1, duration: .35, delay: .25 }),
+        onUpdate: fit,
+        onEnter: els => gsap.fromTo(els, { opacity: 0 }, { opacity: 1, duration: .35, delay: .3 }),
         onLeave: els => gsap.to(els, { opacity: 0, duration: .25 }) });
       const now = box.querySelector('.step.open');
       if (now) gsap.fromTo(now.querySelectorAll('.step-more > *, .step-x'), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .4, stagger: .08, delay: .4, ease: 'power2.out' });
