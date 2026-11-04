@@ -37,7 +37,7 @@
   - burgerSub 介紹頁的「錯過的字不會一直錯」應該是「改過的字」
 - [ ] 英文版的人名、節目名是自己取或翻的，要她確認（清單在 `tools/i18n_en.py` 的 TERMS）
   - 標「？」的特別要看：Genesis Clinic、Waki、Chef A-Chi、Dr. Gracie Hsu、Books in Your Ear、Huohualuo、Today's Corn、Anquan Motors、Zero Li
-- [ ] 工具卡和介紹頁「Pr」「Premiere」混用，要不要統一
+- [x] 工具卡和介紹頁「Pr」「Premiere」統一成 Premiere（11/4）
 - [ ] burgerGuide 介紹頁的內文還是舊說法，例如「四個平台的擬真介面」，要不要跟首頁卡片統一
 - [ ] 服務卡「影像拍攝與後期製作」要不要補一行實例。目前四張都拿掉實例了，所以先不用
 - [ ] 還沒在真機上驗收：
