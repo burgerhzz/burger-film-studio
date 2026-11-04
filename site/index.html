@@ -59,7 +59,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .who{font-family:var(--mono);font-size:12.5px;line-height:1.7;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0}
 .intro h1{font-family:var(--display);font-weight:900;font-size:clamp(28px,4.4vw,52px);line-height:1.18;margin:0 0 18px;text-wrap:balance;letter-spacing:-.01em}
 .intro h1 em{font-style:normal;color:var(--accent)}
-.intro p{margin:0;color:var(--muted);max-width:56ch}
+.intro p{margin:0 0 10px;color:var(--muted);max-width:56ch}
 .intro p.en{font-family:var(--display);font-weight:700;font-size:clamp(16px,1.6vw,20px);letter-spacing:-.01em;color:var(--fg);text-transform:uppercase;margin:-6px 0 16px;line-height:1.25}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .tag{font-size:12.5px;border:1px solid var(--line-2);color:var(--fg);padding:3px 10px;border-radius:999px}
@@ -255,7 +255,12 @@ html.has-cur,html.has-cur *{cursor:none!important}
 .tl h3 small{font-weight:400;color:var(--muted);font-size:14px;margin-left:6px}
 .tl p{margin:4px 0 0;color:var(--muted);font-size:14px}
 /* 我能幫你做什麼：四張服務卡＋合作頻道 */
-.svc-wrap{padding-block:8px 8px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta.ghost{background:transparent;color:var(--fg);border:1px solid var(--line-2)}
+.cta.ghost:hover{border-color:var(--fg)}
+.tabs .chip{font-size:15px;padding:8px 18px}
+.tabs .chip[aria-selected="true"]{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.tab-desc{margin:0 0 18px;color:var(--muted);font-size:14px;max-width:60ch}
 .cw-label{margin:0 0 14px;font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.02em}
 .cw-label span{color:var(--muted);font-weight:500;margin-left:6px}
 .svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:14px;overflow:hidden}
@@ -301,14 +306,11 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
   <div class="wrap">
     <a class="mark" href="#top">Burger <span>Film</span> Studio</a>
     <ul>
+      <li><a href="#featured">精選</a></li>
+      <li><a href="#services">服務</a></li>
       <li><a href="#about">經歷</a></li>
       <li><a href="#tools">AI 工具</a></li>
-      <li><a href="#featured">精選</a></li>
-      <li><a href="#shorts">短影音</a></li>
-      <li><a href="#series">長影音</a></li>
-      <li><a href="#podcast">Podcast</a></li>
-      <li><a href="#perform">演出</a></li>
-      <li><a href="#voice">配音</a></li>
+      <li><a href="#works">其他作品</a></li>
     </ul>
     <a class="cta" href="#contact">聯絡合作</a>
   </div>
@@ -325,14 +327,24 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
     <div class="me"><img class="avatar" src="media/avatar.png" alt="偷心漢堡的大頭貼" width="88" height="88"><p class="who">偷心漢堡<br>製作剪輯師 Producer-Editor</p></div>
     <h1>會剪片，<br>也會寫工具<em>讓剪片變快。</em></h1>
     <p class="en">I edit videos — and build the tools that make editing faster.</p>
-    <p>做影像 9 年，企劃、拍攝到後製都自己來。也用 AI 協作寫了幾個 Premiere Pro 工具：本機自動字幕、YouTube 素材直接進時間軸、短影音安全區疊圖、打包專案自動整理。</p>
+    <p>從企劃、拍攝到後製，擁有 9 年影音製作經驗，熟悉 YouTube 節目、短影音與 Podcast 影音化製作。</p>
+    <p>除了影音製作，也運用 AI 協作開發 Premiere Pro 工具，將字幕處理、素材匯入與專案整理等重複工作自動化，讓創作流程更有效率。</p>
     <div class="tags"><span class="tag">AI 工具開發</span><span class="tag">YouTube 節目</span><span class="tag">短影音</span><span class="tag">Podcast</span><span class="tag">直播</span><span class="tag">形象影片</span></div>
+    <div class="hero-cta"><a class="cta" href="#featured">看作品 ↓</a><a class="cta ghost" href="#contact">聯絡合作</a></div>
   </div>
   <div class="stats" id="stats"></div>
 </div>
 
-<section class="wrap svc-wrap" aria-labelledby="svcTitle">
-  <p class="cw-label" id="svcTitle">我能幫你做什麼 <span>What I Do</span></p>
+
+
+<main>
+  <section class="block wrap" id="featured">
+    <div class="head"><h2><small>精選作品</small>Selected</h2><p>合作過的人物與節目。點畫面直接播放。</p></div>
+    <div class="panels" id="featGrid"></div>
+  </section>
+
+  <section class="block wrap" id="services">
+  <div class="head"><h2><small>服務項目</small>What I Do</h2></div>
   <div class="svc">
     <article><h3>節目製作一條龍<span>Show Production</span></h3><p>一個節目從企劃做到上架。單一系列最長做過 34 集。</p><p class="proof">讓 Pro 級的來 25+ 集・不負責任面相學 34 集・初日醫學系列</p></article>
     <article><h3>短影音操作<span>Short-form</span></h3><p>長片拆成短片，同一支發到 YouTube、IG、TikTok。</p><p class="proof">泰語系列 TikTok 81.6 萬・IG 101.1 萬</p></article>
@@ -341,9 +353,7 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
   </div>
   <p class="partners"><b>合作過</b>初日醫學 Cofit・PressPlay Academy・達康.come笑Tube・小老婆汽機車資訊網・火花羅・興趣使然的攝影師 Enzo・LEE-JING 李靜・大久保麻梨子・安筌運轉・今天有 Corn</p>
 </section>
-</div>
 
-<main>
   <section class="block wrap" id="about">
     <div class="head"><h2><small>經歷</small>Experience</h2></div>
     <div class="about">
@@ -356,7 +366,6 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
       </ol>
       </div>
       <p class="kit"><b>軟體</b>Premiere Pro・After Effects・DaVinci Resolve・Photoshop・Illustrator<br><b>器材</b>Sony Z190／Z150、A7IV／A7III、A7S3／A7S2・GoPro 6–10・DJI OSMO／RS4・Edelkrone Wing PRO・YC Onion<br><b>現場</b>室內外拍攝・燈光・收音・場佈・綠幕・道具</p>
-    </div>
     </div>
   </section>
 
@@ -380,26 +389,22 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
     </div>
   </section>
 
-  <section class="block wrap" id="featured">
-    <div class="head"><h2><small>精選作品</small>Selected</h2><p>合作過的人物與節目。點畫面直接播放。</p></div>
-    <div class="panels" id="featGrid"></div>
-  </section>
-
-  <section class="block wrap" id="shorts">
-    <div class="head"><h2><small>短影音</small>Shorts</h2><p>同一支發在好幾個平台時，顯示觀看數最高的那個。依觀看數排序。</p></div>
+  <section class="block wrap" id="works">
+    <div class="head"><h2><small>其他作品</small>Other Works</h2></div>
+    <div class="chips tabs" role="tablist" id="workTabs" aria-label="作品分類"><button type="button" class="chip" role="tab" data-p="shorts" aria-selected="true">短影音</button><button type="button" class="chip" role="tab" data-p="series" aria-selected="false">長影音</button><button type="button" class="chip" role="tab" data-p="podcast" aria-selected="false">Podcast</button><button type="button" class="chip" role="tab" data-p="perform" aria-selected="false">演出</button><button type="button" class="chip" role="tab" data-p="voice" aria-selected="false">配音</button></div>
+    <div class="tab-panel" id="shorts" role="tabpanel">
+    <p class="tab-desc">同一支發在好幾個平台時，顯示觀看數最高的那個。依觀看數排序。</p>
     <div class="chips" id="shortChips" role="group" aria-label="依主題篩選短影音"></div>
     <div class="masonry v" id="shortGrid"></div>
     <div class="more"><button type="button" id="shortMore">顯示更多</button></div>
-  </section>
-
-  <section class="block wrap" id="series">
-    <div class="head"><h2><small>長影音系列</small>Series</h2><p>依節目系列整理，點卡片看整個系列的影片與分工。</p></div>
+  </div>
+    <div class="tab-panel" id="series" role="tabpanel" hidden>
+    <p class="tab-desc">依節目系列整理，點卡片看整個系列的影片與分工。</p>
     <div class="chips" id="seriesChips" role="group" aria-label="篩選系列類型"></div>
     <div class="masonry" id="seriesGrid"></div>
-  </section>
-
-  <section class="block wrap" id="podcast">
-    <div class="head"><h2><small>Podcast</small>Podcast</h2><p>兩個長期合作的 Podcast。</p></div>
+  </div>
+    <div class="tab-panel" id="podcast" role="tabpanel" hidden>
+    <p class="tab-desc">兩個長期合作的 Podcast。</p>
     <div class="pods">
       <article class="pod"><img src="media/podcast_book.jpg" alt="耳邊說書 Podcast 封面" loading="lazy">
         <div><h3>耳邊說書</h3><p class="role">拍攝、收音、剪輯　Podcast／YouTube／Reels</p><p class="count">合作了 <b>21</b> 集</p>
@@ -408,18 +413,17 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
         <div><h3>達康還在講</h3><p class="role">拍攝、收音、剪輯　Podcast／YouTube</p><p class="count">合作了 <b>22</b> 集</p>
         <button type="button" class="pod-open" data-k="dakang">看《達康還在講》影音版 →</button></div></article>
     </div>
-  </section>
-
-  <section class="block wrap" id="perform">
-    <div class="head"><h2><small>演出作品</small>On Camera</h2><p>以「漢堡小編」身分出鏡的主持、試乘與節目演出。</p></div>
+  </div>
+    <div class="tab-panel" id="perform" role="tabpanel" hidden>
+    <p class="tab-desc">以「漢堡小編」身分出鏡的主持、試乘與節目演出。</p>
     <div class="masonry" id="perfGrid"></div>
     <div class="more"><button type="button" id="perfMore">顯示更多</button></div>
-  </section>
-
-  <section class="block wrap" id="voice">
-    <div class="head"><h2><small>配音作品</small>Voice</h2><p>車輛介紹影片的旁白配音。</p></div>
+  </div>
+    <div class="tab-panel" id="voice" role="tabpanel" hidden>
+    <p class="tab-desc">車輛介紹影片的旁白配音。</p>
     <div class="masonry" id="voiceGrid"></div>
     <div class="more"><button type="button" id="voiceMore">顯示更多</button></div>
+  </div>
   </section>
 
   <section class="contact wrap" id="contact">
@@ -618,6 +622,19 @@ player.addEventListener('close', () => { $('plFrame').innerHTML = ''; });
 // 經歷時間軸：線條 scaleY 0→1（2.4 秒、緩入緩出），跟著捲動進度（scrub）；
 // 線條走到某個節點時，該列的圓點、年份、標題、說明依序從左 10px 滑入。
 // 載不到 GSAP 或偏好減少動態時，全部直接顯示。
+(function tabs(){
+  const bar = $('workTabs'); if (!bar) return;
+  const show = id => {
+    bar.querySelectorAll('[role=tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.p === id));
+    document.querySelectorAll('#works .tab-panel').forEach(p => p.hidden = p.id !== id);
+    $(id).querySelectorAll('.masonry').forEach(el => { const h = MASON.get(el); if (h) mason(el, h); });
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  };
+  bar.onclick = e => { const b = e.target.closest('[role=tab]'); if (b) show(b.dataset.p); };
+  const go = () => { const id = location.hash.slice(1), p = id && document.getElementById(id); if (p && p.classList.contains('tab-panel')) { show(id); $('works').scrollIntoView(); } };
+  addEventListener('hashchange', go); go();
+})();
+
 (function timeline(){
   const wrap = document.querySelector('.tl-wrap');
   if (!wrap || !window.gsap || !window.ScrollTrigger || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
