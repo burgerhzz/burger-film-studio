@@ -97,7 +97,7 @@ TOOLS_EN = [
   "features": ["Speech recognition", "Script alignment", "Custom dictionary", "Transcribes only the parts in use", "In/Out range", "Subtitle editor: split, merge, retime, find & replace", "Standalone Mac app: burgerSub Studio"],
   "thought": "Every line-break threshold was measured against real show subtitles, not picked at random. Loosening a threshold to rescue a few more cases usually lets the wrong ones through too, so every change is checked with a before-and-after comparison across the whole subtitle library.",
   "status": "Version 1.0 released October 2026. Runs entirely on your Mac: audio never leaves the computer and there are no usage fees."},
- {"slug": "burgerbo", "name": "burgerbo", "sub": "YouTube straight to the timeline", "kind": "Premiere Pro extension",
+ {"slug": "burgerbo", "name": "burgerbo", "sub": "YouTube videos straight into Premiere", "kind": "Premiere Pro extension",
   "before": "Edits often need clips from online videos. That used to mean finding a download site, downloading, transcoding when the resolution or codec was wrong, importing and dragging it onto the timeline, for every single clip.",
   "how": [("All in one go", "Paste a URL in the Premiere panel, choose a resolution, and it downloads, transcodes, imports and places the clip on the timeline."),
           ("No unnecessary transcodes", "H.264 sources are imported as-is; it only transcodes when it has to."),
