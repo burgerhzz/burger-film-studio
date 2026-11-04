@@ -18,12 +18,17 @@ html,body{margin:0;width:1920px;height:1080px;background:#000;overflow:hidden;co
 /* 02 合併 */
 .mg{position:absolute;left:0;right:0;top:50%;margin-top:-.6em;font-family:'jf-jinxuan';font-weight:800;font-size:62px;line-height:1.2;text-align:center;white-space:nowrap}
 .mg b{font-weight:inherit;color:#ffe600}
+.sr{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;white-space:nowrap;font-family:'jf-jinxuan';font-weight:800;font-size:62px;line-height:1.25}
+.sr .m{display:inline-block;overflow:hidden;vertical-align:top}
+.sr .m>span{display:inline-block}
+.sr .y{color:#ffe600}
 /* 03 空心字 */
 .ol{position:absolute;left:64px;font-family:'Mantou Sans';font-size:86px;line-height:1;white-space:nowrap;color:transparent;-webkit-text-stroke:2px #fff;
   background:linear-gradient(#fff,#fff) no-repeat 0 0/0% 100%;-webkit-background-clip:text;background-clip:text}
 /* 04 打字（列點） */
 .ty{position:absolute;left:58px;top:50%;transform:translateY(-50%);display:grid;gap:18px;font-family:'GenSenRounded2 TW';font-weight:900;font-size:44px;line-height:1.1;white-space:nowrap}
-.ty .k{color:#3ee0ff}
+.ty .k{color:#fff}
+.ty .lb{color:#ffe600}
 .tyl{min-height:1.1em}
 .tyl:before{content:'';display:inline-block;width:.32em;height:.32em;border-radius:50%;background:#ffe600;margin-right:.45em;vertical-align:.22em}
 .cur{display:inline-block;width:4px;height:.95em;background:#ffe600;margin-left:6px;vertical-align:-.1em}
@@ -44,7 +49,7 @@ const cell=(n,name,html)=>{const d=document.createElement('div');d.className='ce
 const LINES=['族群一　高強度運動、重訓','族群二　高齡熟齡長輩','族群三　外食族、食量小'];
 const T2='<b>成人</b>每公斤 1.1 克';
 const c1=cell(1,'HIGHLIGHTER　螢光筆劃記',`<div class="mid">先算出<span class="hl"><span class="band"></span><span class="tx">一天需要多少</span><span class="tx2">一天需要多少</span></span></div>`);
-const c2=cell(2,'MERGE　合併',`<div class="mg" id="m1" style="clip-path:inset(0 0 50% 0)">${T2}</div><div class="mg" id="m2" style="clip-path:inset(50% 0 0 0)">${T2}</div>`);
+const c2=cell(2,'SPLIT RISE　逐字升起',`<div class="sr">${[...'成人每公斤 1.1 克'].map((c,i)=>`<span class="m"><span class="${i<2?'y':''}">${c===' '?'&nbsp;':c}</span></span>`).join('')}</div>`);
 const c3=cell(3,'OUTLINE FILL　空心字填滿',`<div class="ol" id="o1" style="top:170px;-webkit-text-stroke-color:#ffe600;background-image:linear-gradient(#ffe600,#ffe600)">3 種人</div><div class="ol" id="o2" style="top:280px">適合補蛋白粉</div>`);
 const c4=cell(4,'TYPING　打字列點',`<div class="ty">${LINES.map(()=>`<div class="tyl"><span class="tw"></span><span class="cur"></span></div>`).join('')}</div>`);
 const c5=cell(5,'FLOAT DRIFT　漂浮',`<div class="mid">${split('睡眠休息也是增肌關鍵')}</div>`);
@@ -55,13 +60,15 @@ const fch=[...c5.querySelectorAll('.ch')].map((e,i)=>({e,p:i%2?8/3:4,ph:i*1.7,ax
 const pz=[...c6.querySelectorAll('.pz')].map(e=>({e,k:+e.dataset.k}));
 // 衝擊放大：0–0.42s 從深處衝出、放大過頭到 1.14，之後回彈定位；1.65s 起淡出。2 秒一輪（能整除 8 秒）
 const punch=u=>{if(u<0)return{s:.04,b:14,o:0};if(u<.42){const k=Math.pow(u/.42,2.2);return{s:.04+1.1*k,b:14*(1-k),o:cl(u/.12)}}const v=u-.42;const s=1+.14*Math.exp(-v*9)*Math.cos(v*16);return{s,b:0,o:1-cl((u-1.65)/.3)}};
-const band=c1.querySelector('.band'),htx=c1.querySelector('.tx2'),m1=c2.querySelector('#m1'),m2=c2.querySelector('#m2'),o1=c3.querySelector('#o1'),o2=c3.querySelector('#o2');
+const srch=[...c2.querySelectorAll('.m>span')];
+const p4o=x=>1-Math.pow(1-x,4), p4i=x=>x*x*x*x;
+const band=c1.querySelector('.band'),htx=c1.querySelector('.tx2'),o1=c3.querySelector('#o1'),o2=c3.querySelector('#o2');
 const tyl=[...c4.querySelectorAll('.tyl')];
 window.setT=t=>{
   // 01：4 秒一輪，0.3s 起劃 0.55s，2.6s 收回
   {const u=t%4;let k=ease3(cl((u-.3)/.55));if(u>2.6)k=1-ease3(cl((u-2.6)/.45));band.style.transform=`scaleX(${k})`;htx.style.clipPath=`inset(0 ${(1-k)*100}% 0 0)`;}
-  // 02：4 秒一輪，0.9s 強烈減速合成，停留，3.4s 淡出
-  {const u=t%4,k=ease5(cl(u/.9)),o=Math.min(cl(u/.5),1-cl((u-3.4)/.5));m1.style.transform=`translateX(${-35*(1-k)}%)`;m2.style.transform=`translateX(${35*(1-k)}%)`;m1.style.opacity=m2.style.opacity=o;}
+  // 02：逐字升起，4 秒一輪。每字間隔 0.06s 從遮罩下方升起（0.8s、power4.out），2.7s 起依序往上滑出（0.5s、power4.in）
+  {const u=t%4;srch.forEach((e,i)=>{const a=cl((u-.15-i*.06)/.8),b=cl((u-2.7-i*.06)/.5);e.style.transform=`translateY(${110*(1-p4o(a))-110*p4i(b)}%)`;});}
   // 03：4 秒一輪，第一行填滿 → 換第二行（第一行從右往左退），最後第二行退回
   {const u=t%4;let a=io(cl((u-.3)/.6));if(u>1.6)a=1-io(cl((u-1.6)/.6));let b=io(cl((u-1.6)/.6));if(u>3.2)b=1-io(cl((u-3.2)/.6));
    o1.style.backgroundSize=`${a*100}% 100%`;o1.style.backgroundPosition=u>1.6?'100% 0':'0 0';
@@ -71,7 +78,7 @@ window.setT=t=>{
    tyl.forEach((el,k)=>{const c=[...LINES[k]],ty=c.length*.06;let n;
      if(u<0)n=0;else if(u<ty){n=Math.floor(u/.06);cur=k}else{n=c.length;if(cur<0&&k===tyl.length-1)cur=k}
      u-=ty+.35;el.style.opacity=(n>0||cur===k?1:0)*fade;
-     el.querySelector('.tw').innerHTML=c.slice(0,Math.min(n,4)).join('')+'<span class="k">'+c.slice(4,n).join('')+'</span>';});
+     el.querySelector('.tw').innerHTML='<span class="lb">'+c.slice(0,Math.min(n,4)).join('')+'</span>'+'<span class="k">'+c.slice(4,n).join('')+'</span>';});
    tyl.forEach((el,k)=>{el.querySelector('.cur').style.opacity=(k===cur&&Math.floor(t*2)%2===0)?1:0});}
   // 05：漂浮
   fch.forEach(c=>{const w=2*Math.PI*t/c.p+c.ph;c.e.style.transform=`translate(${Math.sin(w+1.3)*c.ax}px,${Math.sin(w)*c.ay}px) rotate(${Math.sin(2*w)*4}deg)`});
