@@ -1,3 +1,4 @@
+import os
 """works.json + site_template.html → site/index.html"""
 import json, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,6 +39,13 @@ head = """<!doctype html>
 """
 i = html.index("</style>") + len("</style>")
 html = head + html[:i] + "\n</head>\n<body>\n" + html[i:] + "\n</body>\n</html>\n"
+# 媒體網址加上內容雜湊當版本號：檔案一改網址就變，瀏覽器不會繼續播快取的舊檔
+import hashlib, re as _re
+def _bust(m):
+    p = f"{ROOT}/site/{m.group(1)}"
+    if not os.path.exists(p): return m.group(0)
+    return f'{m.group(1)}?v={hashlib.md5(open(p, "rb").read()).hexdigest()[:8]}'
+html = _re.sub(r'(?<=["(])(media/[^"?)\s]+\.(?:mp4|webp|jpg|png))(?=[")])', _bust, html)
 open(f"{ROOT}/site/index.html", "w").write(html)
 
 # 給 Google 試算表用 IMPORTDATA 讀的作品清單（全部都是 YouTube／IG 上公開的資訊）
