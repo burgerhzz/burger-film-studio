@@ -170,6 +170,8 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
 @media (prefers-reduced-motion:reduce){.tool,.tool-art{transition:none}}
 .tool .kind{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 .tool h3{margin:0;font-family:var(--display);font-weight:700;font-size:32px;line-height:.95;letter-spacing:-.03em}
+.tool h3{transition:color .25s ease}
+@media (hover:hover){.tool:hover h3{color:#ffe600}}
 .tool h3 small{display:block;font-family:var(--body);font-size:14px;font-weight:700;color:var(--accent);margin-top:8px;letter-spacing:0}
 .tool p{margin:0;font-size:14px;color:var(--muted)}
 .tool ul{margin:0;padding-left:1.1em;font-size:13.5px;display:grid;gap:3px}
