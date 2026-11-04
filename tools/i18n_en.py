@@ -14,7 +14,7 @@ EN = {
 "累計觀看（每支取最高平台）": "Total views (top platform per video)", "單支最高觀看": "Top single video", "支作品": "videos", "個節目系列": "show series",
 # 服務
 "服務項目": "Services",
-"從企劃、拍攝到剪輯上架，一手完成節目製作。": "From concept and shooting to editing and upload, I handle the whole show.",
+"從企劃、拍攝到後期剪輯，參與節目完整製作流程。": "From planning and shooting to post-production, involved in every stage of the show.",
 "《讓 Pro 級的來》25+ 集・《不負責任面相學》34 集・初日醫學系列": "Let the Pros Do It 25+ eps · Irresponsible Face Reading 34 eps · Cofit Genesis series",
 "短影音企劃與製作": "Short-form Planning & Production", "長片拆短，跨平台延伸內容，讓一份素材創造更多流量。": "Long videos cut into shorts and spread across platforms, so one shoot brings in more views.",
 "泰語系列單支最高觀看：IG 101.1 萬・TikTok 81.6 萬": "Thai series, top single video: IG 1.01M · TikTok 816K",
