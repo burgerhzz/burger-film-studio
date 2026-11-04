@@ -307,11 +307,11 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
     <a class="mark" href="#top">Burger <span>Film</span> Studio</a>
     <ul>
       <li><a href="#featured">精選</a></li>
+      <li><a href="#works">作品</a></li>
       <li><a href="#services">服務</a></li>
       <li><a href="#about">經歷</a></li>
       <li><a href="#tools">AI 工具</a></li>
-      <li><a href="#works">作品</a></li>
-    </ul>
+          </ul>
     <a class="cta" href="#contact">聯絡合作</a>
   </div>
 </nav>
@@ -341,6 +341,43 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
   <section class="block wrap" id="featured">
     <div class="head"><h2><small>精選作品</small>Selected</h2><p>合作過的人物與節目。點畫面直接播放。</p></div>
     <div class="panels" id="featGrid"></div>
+  </section>
+
+  <section class="block wrap" id="works">
+    <div class="head"><h2><small>作品</small>Works</h2></div>
+    <div class="chips tabs" role="tablist" id="workTabs" aria-label="作品分類"><button type="button" class="chip" role="tab" data-p="shorts" aria-selected="true">短影音</button><button type="button" class="chip" role="tab" data-p="series" aria-selected="false">長影音</button><button type="button" class="chip" role="tab" data-p="podcast" aria-selected="false">Podcast</button><button type="button" class="chip" role="tab" data-p="perform" aria-selected="false">演出</button><button type="button" class="chip" role="tab" data-p="voice" aria-selected="false">配音</button></div>
+    <div class="tab-panel" id="shorts" role="tabpanel">
+    <p class="tab-desc">同一支發在好幾個平台時，顯示觀看數最高的那個。依觀看數排序。</p>
+    <div class="chips" id="shortChips" role="group" aria-label="依主題篩選短影音"></div>
+    <div class="masonry v" id="shortGrid"></div>
+    <div class="more"><button type="button" id="shortMore">顯示更多</button></div>
+  </div>
+    <div class="tab-panel" id="series" role="tabpanel" hidden>
+    <p class="tab-desc">依節目系列整理，點卡片看整個系列的影片與分工。</p>
+    <div class="chips" id="seriesChips" role="group" aria-label="篩選系列類型"></div>
+    <div class="masonry" id="seriesGrid"></div>
+  </div>
+    <div class="tab-panel" id="podcast" role="tabpanel" hidden>
+    <p class="tab-desc">兩個長期合作的 Podcast。</p>
+    <div class="pods">
+      <article class="pod"><img src="media/podcast_book.jpg" alt="耳邊說書 Podcast 封面" loading="lazy">
+        <div><h3>耳邊說書</h3><p class="role">拍攝、收音、剪輯　Podcast／YouTube／Reels</p><p class="count">合作了 <b>21</b> 集</p>
+        <button type="button" class="pod-open" data-k="book">看《耳邊說書》影音版 →</button></div></article>
+      <article class="pod"><img src="media/podcast_dakang.jpg" alt="達康還在講 Podcast 封面" loading="lazy">
+        <div><h3>達康還在講</h3><p class="role">拍攝、收音、剪輯　Podcast／YouTube</p><p class="count">合作了 <b>22</b> 集</p>
+        <button type="button" class="pod-open" data-k="dakang">看《達康還在講》影音版 →</button></div></article>
+    </div>
+  </div>
+    <div class="tab-panel" id="perform" role="tabpanel" hidden>
+    <p class="tab-desc">以「漢堡小編」身分出鏡的主持、試乘與節目演出。</p>
+    <div class="masonry" id="perfGrid"></div>
+    <div class="more"><button type="button" id="perfMore">顯示更多</button></div>
+  </div>
+    <div class="tab-panel" id="voice" role="tabpanel" hidden>
+    <p class="tab-desc">車輛介紹影片的旁白配音。</p>
+    <div class="masonry" id="voiceGrid"></div>
+    <div class="more"><button type="button" id="voiceMore">顯示更多</button></div>
+  </div>
   </section>
 
   <section class="block wrap" id="services">
@@ -387,43 +424,6 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
         <p>把「專案管理」打包出來的平鋪資料夾，分類成 Projects、Footage、Assets、Exports。</p>
         <ul><li>只在同一顆硬碟裡搬，不複製檔案</li><li>每次搬移都有紀錄，可一鍵還原</li><li>Intel 與 Apple 晶片都能跑</li></ul></article>
     </div>
-  </section>
-
-  <section class="block wrap" id="works">
-    <div class="head"><h2><small>作品</small>Works</h2></div>
-    <div class="chips tabs" role="tablist" id="workTabs" aria-label="作品分類"><button type="button" class="chip" role="tab" data-p="shorts" aria-selected="true">短影音</button><button type="button" class="chip" role="tab" data-p="series" aria-selected="false">長影音</button><button type="button" class="chip" role="tab" data-p="podcast" aria-selected="false">Podcast</button><button type="button" class="chip" role="tab" data-p="perform" aria-selected="false">演出</button><button type="button" class="chip" role="tab" data-p="voice" aria-selected="false">配音</button></div>
-    <div class="tab-panel" id="shorts" role="tabpanel">
-    <p class="tab-desc">同一支發在好幾個平台時，顯示觀看數最高的那個。依觀看數排序。</p>
-    <div class="chips" id="shortChips" role="group" aria-label="依主題篩選短影音"></div>
-    <div class="masonry v" id="shortGrid"></div>
-    <div class="more"><button type="button" id="shortMore">顯示更多</button></div>
-  </div>
-    <div class="tab-panel" id="series" role="tabpanel" hidden>
-    <p class="tab-desc">依節目系列整理，點卡片看整個系列的影片與分工。</p>
-    <div class="chips" id="seriesChips" role="group" aria-label="篩選系列類型"></div>
-    <div class="masonry" id="seriesGrid"></div>
-  </div>
-    <div class="tab-panel" id="podcast" role="tabpanel" hidden>
-    <p class="tab-desc">兩個長期合作的 Podcast。</p>
-    <div class="pods">
-      <article class="pod"><img src="media/podcast_book.jpg" alt="耳邊說書 Podcast 封面" loading="lazy">
-        <div><h3>耳邊說書</h3><p class="role">拍攝、收音、剪輯　Podcast／YouTube／Reels</p><p class="count">合作了 <b>21</b> 集</p>
-        <button type="button" class="pod-open" data-k="book">看《耳邊說書》影音版 →</button></div></article>
-      <article class="pod"><img src="media/podcast_dakang.jpg" alt="達康還在講 Podcast 封面" loading="lazy">
-        <div><h3>達康還在講</h3><p class="role">拍攝、收音、剪輯　Podcast／YouTube</p><p class="count">合作了 <b>22</b> 集</p>
-        <button type="button" class="pod-open" data-k="dakang">看《達康還在講》影音版 →</button></div></article>
-    </div>
-  </div>
-    <div class="tab-panel" id="perform" role="tabpanel" hidden>
-    <p class="tab-desc">以「漢堡小編」身分出鏡的主持、試乘與節目演出。</p>
-    <div class="masonry" id="perfGrid"></div>
-    <div class="more"><button type="button" id="perfMore">顯示更多</button></div>
-  </div>
-    <div class="tab-panel" id="voice" role="tabpanel" hidden>
-    <p class="tab-desc">車輛介紹影片的旁白配音。</p>
-    <div class="masonry" id="voiceGrid"></div>
-    <div class="more"><button type="button" id="voiceMore">顯示更多</button></div>
-  </div>
   </section>
 
   <section class="contact wrap" id="contact">
