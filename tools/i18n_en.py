@@ -33,7 +33,7 @@ EN = {
 "本機自動字幕": "On-device auto subtitles", "在 Premiere 裡直接產生並編輯字幕，全程在本機跑，不用上傳素材。": "Generate and edit subtitles right inside Premiere. Everything runs locally; no uploads.",
 "台灣華語語音辨識，原生繁體": "Speech recognition for Taiwanese Mandarin, Traditional Chinese output", "繁中斷詞，依語意斷行": "Line breaks follow word boundaries", "可用腳本文檔對位校正": "Align subtitles to an existing script", "另有 Mac 獨立版 burgerSub Studio": "Standalone Mac version: burgerSub Studio",
 "看介紹 →": "Learn more →",
-"字幕要先": "Subtitles took three steps:", "1. 剪映生成": "1. generate in CapCut", "2. 簡轉繁": "2. convert to Traditional Chinese", "3. 再匯進 Premiere": "3. import into Premiere", "台灣口語還常聽錯，校正很花時間": "Taiwanese expressions were often misheard, so proofreading took ages",
+"字幕要先": "Subtitles took three steps:", "1. 剪映生成字幕": "1. generate subtitles in CapCut", "2. 簡轉繁": "2. convert to Traditional Chinese", "3. 再匯進 Pr": "3. import into Premiere", "台灣口語還常聽錯，校正很花時間": "Taiwanese expressions were often misheard, so proofreading took ages",
 "在 Pr 直接產生並編輯字幕，全程在本機跑，不用上傳素材。": "Generate and edit subtitles right in Premiere. Everything runs locally; no uploads.",
 "可用腳本文檔對位": "Align subtitles to a script", "可關閉字幕空隙": "Close the gaps between subtitles", "可調整字幕加速倍率": "Adjustable subtitle speed multiplier",
 "在 Pr 貼上網址，素材直接匯入時間軸。": "Paste a URL in Premiere and the clip lands straight on the timeline.",
