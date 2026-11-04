@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>burgerSub | Burger Film Studio</title>
+<meta name="description" content="burgerSub: On-device auto subtitles. Subtitles used to mean running the audio through CapCut, converting the Simplifi…">
+<meta property="og:title" content="burgerSub | On-device auto subtitles">
+<meta property="og:image" content="https://burgerhzz.github.io/burger-film-studio/media/hero.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&family=Red+Hat+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="tool.css">
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="mark" href="../index.html?lang=en">Burger Film Studio</a>
+  <span class="nav-r"><a class="back" href="../index.html?lang=en#tools">← Back to portfolio</a><span class="lang"><a href="burgersub.html" class="">TW</a><a href="burgersub.en.html" class="on">EN</a></span></span>
+</div></nav>
+<main class="wrap doc">
+  <header>
+    <p class="kind">Premiere Pro extension · Mac app</p>
+    <h1>burgerSub</h1>
+    <p class="sub">On-device auto subtitles</p>
+  </header>
+  
+  <section><h2>How it used to work</h2><p>Subtitles used to mean running the audio through CapCut, converting the Simplified Chinese output to Traditional, then importing the SRT into Premiere. Taiwanese expressions were often misheard (欸 came out as 哎), and any change in accent, pace or background noise meant more errors to fix by hand at every step.</p></section>
+  <section><h2>What it changes</h2><ul class="how"><li><b>Never leave Premiere</b>It reads the audio straight from the timeline. If an hour of footage is cut down to three minutes, only those three minutes get transcribed.</li><li><b>No more conversion</b>A speech model trained for Taiwanese Mandarin outputs Traditional Chinese directly, and 欸 is no longer heard as 哎.</li><li><b>Fix a word once</b>Terms corrected in the editor are remembered and fed to the model on the next run.</li><li><b>Line breaks that make sense</b>A Traditional Chinese word-segmentation model breaks lines at phrase boundaries instead of at a fixed character count.</li><li><b>Align to a script</b>If there&#x27;s already a script, the text is aligned to the timeline. Lines that weren&#x27;t spoken turn grey and don&#x27;t throw off the timing after them.</li></ul></section>
+  <section><h2>Core features</h2><ul class="feat"><li>Speech recognition</li><li>Script alignment</li><li>Custom dictionary</li><li>Transcribes only the parts in use</li><li>In/Out range</li><li>Subtitle editor: split, merge, retime, find &amp; replace</li><li>Standalone Mac app: burgerSub Studio</li></ul><p class="status">Version 1.0 released October 2026. Runs entirely on your Mac: audio never leaves the computer and there are no usage fees.</p></section>
+  <section class="thought"><h2>Decisions behind it</h2><p>Every line-break threshold was measured against real show subtitles, not picked at random. Loosening a threshold to rescue a few more cases usually lets the wrong ones through too, so every change is checked with a before-and-after comparison across the whole subtitle library.</p></section>
+  
+  <nav class="pager" aria-label="Other tools">
+    <a href="prsort.en.html"><small>Previous</small>PR Sort</a>
+    <a href="burgerbo.en.html"><small>Next</small>burgerbo</a>
+  </nav>
+</main>
+<footer class="wrap">© Burger Film Studio</footer>
+</body>
+</html>

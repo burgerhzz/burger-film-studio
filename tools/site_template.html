@@ -37,6 +37,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nav ul a:hover{color:var(--fg)}
 .cta{background:var(--accent);color:var(--bg);text-transform:uppercase;letter-spacing:.02em;text-decoration:none;font-weight:700;font-size:14px;padding:8px 16px;border-radius:999px;white-space:nowrap}
 .cta:hover{background:var(--accent-hi)}
+.lang{display:flex;border:1px solid var(--line-2);border-radius:999px;padding:2px;gap:2px}
+.lang a{font:700 12px/1 var(--display);letter-spacing:.06em;text-decoration:none;color:var(--muted);padding:7px 10px;border-radius:999px}
+.lang a:hover{color:var(--fg)}
+.lang a.on{background:var(--fg);color:var(--bg)}
+html[lang="en"] .intro p.en{display:none}
+html[lang="en"] .intro h1{white-space:normal}
+html[lang="en"] .intro h1 em{display:block}
+
 
 /* hero */
 .hero{position:relative;background:#050505;aspect-ratio:16/9;max-height:min(68vh,720px);width:100%;overflow:hidden}
@@ -290,7 +298,7 @@ html.has-cur,html.has-cur *{cursor:none!important}
 /* 箭頭：①→②→③ ↓ ④←⑤←⑥ */
 .step:after{content:"";position:absolute;z-index:1;color:var(--dim);font:700 22px/1 var(--display)}
 .s1:after,.s2:after{content:"→";right:-37px;top:calc(50% - 11px)}
-.s3:after{content:"↓";left:calc(50% - 7px);bottom:-36px}
+.s3:after{content:"＋　兩種形式";left:calc(50% - 14px);bottom:-36px;font:700 13px/1 var(--body);color:#ffe600;letter-spacing:.06em;white-space:nowrap}
 .s4:after,.s5:after{content:"←";left:-37px;top:calc(50% - 11px)}
 .step-note{grid-area:1/2;align-self:center;justify-self:end;margin-right:-50px;z-index:1;writing-mode:vertical-rl;font-size:11px;letter-spacing:.2em;color:#ffe600;pointer-events:none;transform:translateY(-58px)}
 /* 展開：被點的那張佔滿整區，其他卡片隱藏（GSAP Flip 補間） */
@@ -312,6 +320,7 @@ html.has-cur,html.has-cur *{cursor:none!important}
   .step:nth-child(odd):after{content:"→"!important;left:auto!important;right:-31px!important;top:calc(50% - 11px)!important;bottom:auto}
   .s6:after{display:none}
   .step-note{display:none}
+  .steps .s3:after{content:"＋"!important;color:#ffe600;font:700 22px/1 var(--display)}
   .step.open{grid-template-columns:minmax(0,1fr)}
   .step.open .step-body{padding:0 4px}
 }
@@ -320,6 +329,7 @@ html.has-cur,html.has-cur *{cursor:none!important}
   .step:after,.step:nth-child(odd):after{content:"↓"!important;left:calc(50% - 7px)!important;right:auto!important;top:auto!important;bottom:-30px!important}
   .s6:after{display:none}
   .step.open h4{font-size:24px}
+  .steps .s3:after{content:"＋"!important}
 }
 .svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-radius:14px;overflow:hidden}
 .svc article{background:var(--surface);padding:22px 22px 24px;display:grid;gap:10px;align-content:start;min-width:0}
@@ -368,6 +378,7 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
       <li><a href="#about">經歷</a></li>
           </ul>
     <a class="cta" href="#contact">聯絡合作</a>
+    <div class="lang" role="group" aria-label="Language"><a href="?lang=zh" data-l="zh">TW</a><a href="?lang=en" data-l="en">EN</a></div>
   </div>
 </nav>
 
@@ -462,15 +473,15 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
           <button type="button" class="step-x" aria-label="收合">✕</button>
         </li>
         <li class="step s3" data-k="mg">
-          <button type="button" class="step-hit" aria-expanded="false" aria-label="展開步驟 3：MG 開場動畫"></button>
-          <figure class="step-media"><div class="step-frame"><img src="media/flow/mg_poster.webp" alt="" loading="lazy"><video autoplay data-src="media/flow/mg.mp4" muted loop playsinline preload="none" aria-label="MG 開場動畫的動態示範"></video></div><figcaption>版權為 Cofit 所有，此處僅供展示</figcaption></figure>
+          <button type="button" class="step-hit" aria-expanded="false" aria-label="展開步驟 3A：MG 動畫"></button>
+          <figure class="step-media"><div class="step-frame"><img src="media/flow/mg_poster.webp" alt="" loading="lazy"><video autoplay data-src="media/flow/mg.mp4" muted loop playsinline preload="none" aria-label="MG 動畫的動態示範"></video></div><figcaption>版權為 Cofit 所有，此處僅供展示</figcaption></figure>
           <div class="step-body">
-            <p class="step-n"><span>STEP</span> 03</p>
-            <h4>MG 開場動畫</h4>
-            <p class="step-io">旁白 mp3＋素材包 <i>→</i> 紙張拼貼風開場動畫</p>
+            <p class="step-n"><span>STEP</span> 03A</p>
+            <h4>MG 動畫</h4>
+            <p class="step-io">素材包＋參考影片＋旁白 mp3 <i>→</i> 跟著旁白進場的 MG 動畫</p>
             <p class="step-chk">人工確認</p>
             <div class="step-more">
-              <p>畫面跟著旁白逐字進場。音效依動畫裡每個元素實際開始動的那一格來混，不是照旁白估時間。</p>
+              <p>參考影片定風格，素材包排版，畫面跟著旁白逐字進場，開場、段落說明都能用。音效依動畫裡每個元素實際開始動的那一格來混，不是照旁白估時間。</p>
               <p class="step-me"><b>這一步我確認什麼</b>每一版先出分鏡抽格圖，我看過才輸出</p>
               <p class="step-use">用在：國際醫學解碼 EP5 開場（82 秒，這裡節錄開頭並加速播放）</p>
             </div>
@@ -478,12 +489,12 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
           <button type="button" class="step-x" aria-label="收合">✕</button>
         </li>
         <li class="step s4" data-k="infocard">
-          <button type="button" class="step-hit" aria-expanded="false" aria-label="展開步驟 4：圖卡動畫"></button>
+          <button type="button" class="step-hit" aria-expanded="false" aria-label="展開步驟 3B：圖卡動畫"></button>
           <figure class="step-media"><div class="step-frame"><img src="media/flow/infocard_poster.webp" alt="" loading="lazy"><video autoplay data-src="media/flow/infocard.mp4" muted loop playsinline preload="none" aria-label="圖卡動畫的動態示範"></video></div><figcaption>版權為 Cofit 所有，此處僅供展示</figcaption></figure>
           <div class="step-body">
-            <p class="step-n"><span>STEP</span> 04</p>
+            <p class="step-n"><span>STEP</span> 03B</p>
             <h4>圖卡動畫</h4>
-            <p class="step-io">資訊圖卡＋旁白 <i>→</i> 跟著旁白進場的圖卡動畫</p>
+            <p class="step-io">資訊圖卡＋旁白 mp3 <i>→</i> 跟著旁白進場的圖卡動畫</p>
             <p class="step-chk">人工確認</p>
             <div class="step-more">
               <p>旁白講到哪個區塊，那個區塊才進場，皮膚分層依序亮起。</p>
@@ -494,10 +505,10 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
           <button type="button" class="step-x" aria-label="收合">✕</button>
         </li>
         <li class="step s5" data-k="broll">
-          <button type="button" class="step-hit" aria-expanded="false" aria-label="展開步驟 5：自動組片"></button>
+          <button type="button" class="step-hit" aria-expanded="false" aria-label="展開步驟 4：自動組片"></button>
           <figure class="step-media"><div class="step-frame"><img src="media/flow/broll_poster.webp" alt="" loading="lazy"><video autoplay data-src="media/flow/broll.mp4" muted loop playsinline preload="none" aria-label="自動組片的動態示範"></video></div><figcaption>版權為 Cofit 所有，此處僅供展示</figcaption></figure>
           <div class="step-body">
-            <p class="step-n"><span>STEP</span> 05</p>
+            <p class="step-n"><span>STEP</span> 04</p>
             <h4>自動組片</h4>
             <p class="step-io">精剪序列＋動畫 <i>→</i> 動畫、b-roll、配樂上時間軸</p>
             <p class="step-chk">人工確認</p>
@@ -510,10 +521,10 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
           <button type="button" class="step-x" aria-label="收合">✕</button>
         </li>
         <li class="step s6" data-k="textcards">
-          <button type="button" class="step-hit" aria-expanded="false" aria-label="展開步驟 6：重點字卡上字"></button>
+          <button type="button" class="step-hit" aria-expanded="false" aria-label="展開步驟 5：重點字卡上字"></button>
           <figure class="step-media"><div class="step-frame"><img src="media/flow/textcards_poster.webp" alt="" loading="lazy"><video autoplay data-src="media/flow/textcards.mp4" muted loop playsinline preload="none" aria-label="重點字卡上字的動態示範"></video></div><figcaption>版權為 Cofit 所有，此處僅供展示</figcaption></figure>
           <div class="step-body">
-            <p class="step-n"><span>STEP</span> 06</p>
+            <p class="step-n"><span>STEP</span> 05</p>
             <h4>重點字卡上字</h4>
             <p class="step-io">字幕台詞＋我的字卡範本 <i>→</i> 字卡批次放上時間軸</p>
             <p class="step-chk">人工確認</p>
@@ -624,7 +635,11 @@ const SER = Object.fromEntries(DATA.series.map(s => [s.key, s]));
 const BLURB = __BLURB__;
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const fmtV = n => n >= 10000 ? (n/10000).toFixed(1).replace(/\.0$/,'') + '萬' : n.toLocaleString('en');
+const LANG = (() => { const q = new URLSearchParams(location.search).get('lang'); try { if (q) localStorage.setItem('lang', q); return (q || localStorage.getItem('lang')) === 'en' ? 'en' : 'zh'; } catch { return q === 'en' ? 'en' : 'zh'; } })();
+const I18N = __I18N__;
+const fmtV = LANG === 'en'
+  ? n => n >= 1e6 ? (n/1e6).toFixed(1).replace(/\.0$/,'') + 'M' : n >= 1e3 ? (n/1e3).toFixed(n >= 1e4 ? 0 : 1).replace(/\.0$/,'') + 'K' : String(n)
+  : n => n >= 10000 ? (n/10000).toFixed(1).replace(/\.0$/,'') + '萬' : n.toLocaleString('en');
 const fmtD = d => d ? d.slice(0,7).replace('-', '/') : '';
 const fmtS = s => s >= 3600 ? `${Math.floor(s/3600)}:${String(Math.floor(s%3600/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}` : `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
 const clean = t => t.replace(/[｜|]?\s*#\S+/g, '').replace(/\s+/g, ' ').trim() || t;
@@ -728,7 +743,7 @@ function renderSeries(){
       <span class="eyebrow">${esc(s.group)} · ${yr}</span>
       <h3>${esc(s.name)}</h3>
       <p class="role">${esc(s.role)}</p>
-      ${BLURB[s.key] ? `<p class="blurb">${esc(BLURB[s.key])}</p>` : ''}
+      ${BLURB[s.key] ? `<p class="blurb">${esc(LANG === 'en' && I18N.BLURB_EN[s.key] || BLURB[s.key])}</p>` : ''}
       ${rest.length ? `<span class="strip">${rest.slice(0,3).map(w => `<span class="th">${img(w.id,'h')}</span>`).join('')}</span>` : ''}
       <p class="count">收錄 <b>${s.vids.length}</b> 支 · 累計 ${fmtV(s.total)} 次觀看</p>
       <span class="open">看整個系列 →</span></button>`;
@@ -827,6 +842,40 @@ player.addEventListener('close', () => { $('plFrame').innerHTML = ''; });
     c.addEventListener('click', e => { if (c.classList.contains('open') && !e.target.closest('.step-x, .step-hit, a')) set(null); });
   });
   addEventListener('keydown', e => { if (e.key === 'Escape' && box.querySelector('.step.open')) set(null); });
+})();
+
+(function i18n(){
+  document.querySelectorAll('.lang a').forEach(a => a.classList.toggle('on', a.dataset.l === LANG));
+  if (LANG !== 'en') return;
+  document.documentElement.lang = 'en';
+  const {EN, TERMS, ROLES} = I18N, CJK = /[\u3400-\u9fff]/;
+  const roles = s => { const p = s.split('、').map(x => x.trim()); return p.every(x => ROLES[x]) ? p.map(x => ROLES[x]).join(', ').replace(/^./, c => c.toUpperCase()) : null; };
+  const word = s => EN[s] ?? TERMS[s] ?? roles(s);
+  const RULES = [
+    [/^我負責：(.+)$/, m => 'My role: ' + (roles(m[1]) || m[1]).toLowerCase()],
+    [/^(.+) · (\d{4}(?:–\d{4})?)$/, m => (word(m[1]) ?? m[1]) + ' · ' + m[2]],
+    [/^支 · 累計 (.+) 次觀看$/, m => 'videos · ' + m[1] + ' views'],
+    [/^顯示更多（還有 (\d+) 支）$/, m => `Show more (${m[1]} left)`],
+    [/^(\d{4}\/\d{2}) – 現在$/, m => m[1] + ' – Present'],
+    [/^▷ (.+)　·　(\d+) 支$/, m => `▷ ${roles(m[1]) || m[1]} · ${m[2]} videos`],
+    [/^([^　]+)　(.+)$/, m => roles(m[1]) ? roles(m[1]) + ' · ' + m[2].replace(/／/g, ' / ') : null],
+    [/^展開步驟 (\w+)：(.+)$/, m => `Open step ${m[1]}: ${word(m[2]) ?? m[2]}`],
+    [/^(.+)的動態示範$/, m => (word(m[1]) ?? m[1]) + ' demo'],
+    [/^([^｜]+)｜([^：]+)：(.+)$/, m => (word(m[1]) ?? m[1]) + ' | ' + (word(m[2]) ?? m[2]) + ': ' + m[3]],
+  ];
+  const tr = s => { const t = s.trim(); if (!t || !CJK.test(t)) return null; let r = word(t);
+    if (r == null) for (const [re, f] of RULES) { const m = t.match(re); if (m && (r = f(m)) != null) break; }
+    return r == null ? null : s.replace(t, r); };
+  const skip = n => n.parentElement && n.parentElement.closest('script, style, .w:not(.panel) h3');
+  const run = root => {
+    const W = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n;
+    while ((n = W.nextNode())) { if (skip(n)) continue; const r = tr(n.nodeValue); if (r != null && r !== n.nodeValue) n.nodeValue = r; }
+    (root.querySelectorAll ? root : document).querySelectorAll('[aria-label],[alt],[title]').forEach(e => ['aria-label', 'alt', 'title'].forEach(a => { const v = e.getAttribute(a); const r = v && tr(v); if (r != null && r !== v) e.setAttribute(a, r); }));
+  };
+  document.querySelectorAll('a[href^="tools/"]').forEach(a => a.href = a.getAttribute('href').replace(/\.html$/, '.en.html'));
+  run(document.body);
+  new MutationObserver(ms => ms.forEach(m => { m.addedNodes.forEach(n => { if (n.nodeType === 3) { if (!skip(n)) { const r = tr(n.nodeValue); if (r != null && r !== n.nodeValue) n.nodeValue = r; } } else if (n.nodeType === 1) run(n); }); }))
+    .observe(document.body, { childList: true, subtree: true });
 })();
 
 (function timeline(){

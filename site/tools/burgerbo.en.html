@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>burgerbo | Burger Film Studio</title>
+<meta name="description" content="burgerbo: YouTube straight to the timeline. Edits often need clips from online videos. That used to mean finding a download …">
+<meta property="og:title" content="burgerbo | YouTube straight to the timeline">
+<meta property="og:image" content="https://burgerhzz.github.io/burger-film-studio/media/hero.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&family=Red+Hat+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="tool.css">
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="mark" href="../index.html?lang=en">Burger Film Studio</a>
+  <span class="nav-r"><a class="back" href="../index.html?lang=en#tools">← Back to portfolio</a><span class="lang"><a href="burgerbo.html" class="">TW</a><a href="burgerbo.en.html" class="on">EN</a></span></span>
+</div></nav>
+<main class="wrap doc">
+  <header>
+    <p class="kind">Premiere Pro extension</p>
+    <h1>burgerbo</h1>
+    <p class="sub">YouTube straight to the timeline</p>
+  </header>
+  
+  <section><h2>How it used to work</h2><p>Edits often need clips from online videos. That used to mean finding a download site, downloading, transcoding when the resolution or codec was wrong, importing and dragging it onto the timeline, for every single clip.</p></section>
+  <section><h2>What it changes</h2><ul class="how"><li><b>All in one go</b>Paste a URL in the Premiere panel, choose a resolution, and it downloads, transcodes, imports and places the clip on the timeline.</li><li><b>No unnecessary transcodes</b>H.264 sources are imported as-is; it only transcodes when it has to.</li><li><b>Batch it</b>Paste a whole list of URLs with ⌘V and they queue up.</li></ul></section>
+  <section><h2>Core features</h2><ul class="feat"><li>Up to 4K</li><li>ProRes 422 output</li><li>Batch download queue</li><li>Choice of timeline placement</li></ul></section>
+  <section class="thought"><h2>Decisions behind it</h2><p>Batches run one clip at a time, not in parallel. Bandwidth and transcoding are shared, so running three at once just makes all three slower, and the progress bar can&#x27;t say which one it&#x27;s talking about.</p><p>One failure doesn&#x27;t stop the batch. When it&#x27;s done, successful clips leave the queue and failed ones stay, so what&#x27;s left is exactly the retry list.</p><p>Enter used to start the download; it now adds the URL to the list, because building a list shouldn&#x27;t need the mouse for every clip. Pressing Enter on an empty field still starts the download, so the old habit costs one extra key.</p></section>
+  <p class="sales"><a href="https://burgerhzz.github.io/" target="_blank" rel="noopener">Product page & download ↗</a></p>
+  <nav class="pager" aria-label="Other tools">
+    <a href="burgersub.en.html"><small>Previous</small>burgerSub</a>
+    <a href="burgerguide.en.html"><small>Next</small>burgerGuide</a>
+  </nav>
+</main>
+<footer class="wrap">© Burger Film Studio</footer>
+</body>
+</html>

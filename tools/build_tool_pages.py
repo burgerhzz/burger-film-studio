@@ -79,14 +79,63 @@ TOOLS = [
     },
 ]
 
+UI = {
+ "zh": {"html": "zh-Hant", "back": "← 回作品集", "before": "以前怎麼做、卡在哪", "how": "它怎麼改善", "feat": "核心功能", "thought": "做的時候想清楚的事",
+        "sales": "官方介紹與下載頁 ↗", "others": "其他工具", "prev": "上一個", "next": "下一個", "foot": "© Burger Film Studio · 偷心漢堡"},
+ "en": {"html": "en", "back": "← Back to portfolio", "before": "How it used to work", "how": "What it changes", "feat": "Core features", "thought": "Decisions behind it",
+        "sales": "Product page & download ↗", "others": "Other tools", "prev": "Previous", "next": "Next", "foot": "© Burger Film Studio"},
+}
+
+TOOLS_EN = [
+ {"slug": "burgersub", "name": "burgerSub", "sub": "On-device auto subtitles", "kind": "Premiere Pro extension · Mac app",
+  "before": "Subtitles used to mean running the audio through CapCut, converting the Simplified Chinese output to Traditional, then importing the SRT into Premiere. Taiwanese expressions were often misheard (欸 came out as 哎), and any change in accent, pace or background noise meant more errors to fix by hand at every step.",
+  "how": [("Never leave Premiere", "It reads the audio straight from the timeline. If an hour of footage is cut down to three minutes, only those three minutes get transcribed."),
+          ("No more conversion", "A speech model trained for Taiwanese Mandarin outputs Traditional Chinese directly, and 欸 is no longer heard as 哎."),
+          ("Fix a word once", "Terms corrected in the editor are remembered and fed to the model on the next run."),
+          ("Line breaks that make sense", "A Traditional Chinese word-segmentation model breaks lines at phrase boundaries instead of at a fixed character count."),
+          ("Align to a script", "If there's already a script, the text is aligned to the timeline. Lines that weren't spoken turn grey and don't throw off the timing after them.")],
+  "features": ["Speech recognition", "Script alignment", "Custom dictionary", "Transcribes only the parts in use", "In/Out range", "Subtitle editor: split, merge, retime, find & replace", "Standalone Mac app: burgerSub Studio"],
+  "thought": "Every line-break threshold was measured against real show subtitles, not picked at random. Loosening a threshold to rescue a few more cases usually lets the wrong ones through too, so every change is checked with a before-and-after comparison across the whole subtitle library.",
+  "status": "Version 1.0 released October 2026. Runs entirely on your Mac: audio never leaves the computer and there are no usage fees."},
+ {"slug": "burgerbo", "name": "burgerbo", "sub": "YouTube straight to the timeline", "kind": "Premiere Pro extension",
+  "before": "Edits often need clips from online videos. That used to mean finding a download site, downloading, transcoding when the resolution or codec was wrong, importing and dragging it onto the timeline, for every single clip.",
+  "how": [("All in one go", "Paste a URL in the Premiere panel, choose a resolution, and it downloads, transcodes, imports and places the clip on the timeline."),
+          ("No unnecessary transcodes", "H.264 sources are imported as-is; it only transcodes when it has to."),
+          ("Batch it", "Paste a whole list of URLs with ⌘V and they queue up.")],
+  "features": ["Up to 4K", "ProRes 422 output", "Batch download queue", "Choice of timeline placement"],
+  "thought": ["Batches run one clip at a time, not in parallel. Bandwidth and transcoding are shared, so running three at once just makes all three slower, and the progress bar can't say which one it's talking about.",
+              "One failure doesn't stop the batch. When it's done, successful clips leave the queue and failed ones stay, so what's left is exactly the retry list.",
+              "Enter used to start the download; it now adds the URL to the list, because building a list shouldn't need the mouse for every clip. Pressing Enter on an empty field still starts the download, so the old habit costs one extra key."],
+  "sales": True},
+ {"slug": "burgerguide", "name": "burgerGuide", "sub": "Short-form safe-zone overlay", "kind": "Premiere Pro extension",
+  "img": ("~/Desktop/burgerGuide/docs/preview-platforms.png", "TikTok, Instagram Reels and YouTube Shorts interfaces overlaid on a frame, with the safe area in red dashed lines"),
+  "before": "Text cards, logos and faces in short-form video often end up hidden behind platform buttons and captions, and you only find out after posting. The options used to be a downloaded safe-zone template with a single layout, or dragging guides by hand.",
+  "how": [("No template hunting", "Realistic TikTok, Instagram Reels, Facebook Reels and YouTube Shorts interfaces are built into the panel and drop onto the top track in one click."),
+          ("Switchable layouts", "Each platform has its own overlay, plus a conservative frame that's safe on all three and a 16:9 YouTube layout."),
+          ("No more manual guides", "Rule of thirds, centre cross, action-safe and title-safe areas are a toggle away, and custom grids can be saved as presets."),
+          ("One opacity slider", "Everything is merged into a single clip, so one slider controls the opacity.")],
+  "features": ["Realistic UI for four platforms", "Safe-on-all-three frame", "16:9 YouTube layout", "Rule of thirds, centre cross, action-safe, title-safe", "Custom grids saved as presets"],
+  "thought": "Premiere doesn't let extensions draw guides, so the overlay is a transparent image on its own track. The trade-off: that track has to be switched off before export, or the overlay will be rendered too.",
+  "sales": True},
+ {"slug": "prsort", "name": "PR Sort", "short": "PR Sort", "sub": "One-click sorting for Premiere project packages", "kind": "macOS app",
+  "before": "Packaging a project with Premiere's Project Manager dumps every file into one flat folder: footage, music and project files all mixed together. Whoever takes over opens the folder and can't tell where anything is.",
+  "how": [("Sorted the way editors expect", "Drop the folder into the app and it's organised into a structure editors already know, so whoever takes over can find things by folder name:")],
+  "tree": [("Projects", "Project files and Premiere caches"), ("Footage", "One folder per camera (CAM_A, B, C), with photos and voice-over kept separate"),
+           ("Assets", "Motion graphics, music and sound effects, with music and SFX split at 90 seconds"), ("Exports", "Rendered files")],
+  "after_tree": "Files it isn't sure about get an orange question mark and a drop-down so you can decide.",
+  "features": ["Moves within the same drive only: no renaming, copying or deleting", "Every move is logged and can be undone in one click", "Runs on Intel and Apple silicon Macs"],
+  "thought": "Once, a project wouldn't open after sorting. It looked like the tool had broken it, but the package had come out of Premiere already broken. So step one of the instructions became: open the project once before sorting to make sure it works."},
+]
+
 e = html.escape
 
-def page(t, prev, nxt):
+def page(t, prev, nxt, lang='zh'):
+    U = UI[lang]; sx = '' if lang == 'zh' else '.en'
     shown = t.get("short", t["name"])
     img = ""
     if t.get("img"):
         src, alt = t["img"]
-        Image.open(os.path.expanduser(src)).convert("RGB").save(f"{OUT}/{t['slug']}.webp", "WEBP", quality=85, method=6)
+        if lang == 'zh': Image.open(os.path.expanduser(src)).convert("RGB").save(f"{OUT}/{t['slug']}.webp", "WEBP", quality=85, method=6)
         w, h = Image.open(f"{OUT}/{t['slug']}.webp").size
         img = f'<figure class="shot"><img src="{t["slug"]}.webp" alt="{e(alt)}" width="{w}" height="{h}"></figure>'
     how = "".join(f"<li><b>{e(a)}</b>{e(b)}</li>" for a, b in t["how"])
@@ -97,15 +146,15 @@ def page(t, prev, nxt):
     thought = t["thought"] if isinstance(t["thought"], list) else [t["thought"]]
     thought = "".join(f"<p>{e(p)}</p>" for p in thought)
     status = f'<p class="status">{e(t["status"])}</p>' if t.get("status") else ""
-    sales = f'<p class="sales"><a href="{SALES}" target="_blank" rel="noopener">官方介紹與下載頁 ↗</a></p>' if t.get("sales") else ""
+    sales = f'<p class="sales"><a href="{SALES}" target="_blank" rel="noopener">{U["sales"]}</a></p>' if t.get("sales") else ""
     return f"""<!doctype html>
-<html lang="zh-Hant">
+<html lang="{U['html']}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{e(shown)}｜Burger Film Studio</title>
-<meta name="description" content="{e(t['name'])}：{e(t['sub'])}。{e(t['before'][:60])}…">
-<meta property="og:title" content="{e(t['name'])}｜{e(t['sub'])}">
+<title>{e(shown)} | Burger Film Studio</title>
+<meta name="description" content="{e(t['name'])}: {e(t['sub'])}. {e(t['before'][:80])}…">
+<meta property="og:title" content="{e(t['name'])} | {e(t['sub'])}">
 <meta property="og:image" content="https://burgerhzz.github.io/burger-film-studio/media/hero.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -114,8 +163,8 @@ def page(t, prev, nxt):
 </head>
 <body>
 <nav class="nav"><div class="wrap">
-  <a class="mark" href="../index.html">Burger Film Studio</a>
-  <a class="back" href="../index.html#tools">← 回作品集</a>
+  <a class="mark" href="../index.html?lang={lang}">Burger Film Studio</a>
+  <span class="nav-r"><a class="back" href="../index.html?lang={lang}#tools">{U['back']}</a><span class="lang"><a href="{t['slug']}.html" class="{'on' if lang=='zh' else ''}">TW</a><a href="{t['slug']}.en.html" class="{'on' if lang=='en' else ''}">EN</a></span></span>
 </div></nav>
 <main class="wrap doc">
   <header>
@@ -124,17 +173,17 @@ def page(t, prev, nxt):
     <p class="sub">{e(t['sub'])}</p>
   </header>
   {img}
-  <section><h2>以前怎麼做、卡在哪</h2><p>{e(t['before'])}</p></section>
-  <section><h2>它怎麼改善</h2><ul class="how">{how}</ul>{tree}</section>
-  <section><h2>核心功能</h2><ul class="feat">{"".join(f"<li>{e(f)}</li>" for f in t['features'])}</ul>{status}</section>
-  <section class="thought"><h2>做的時候想清楚的事</h2>{thought}</section>
+  <section><h2>{U['before']}</h2><p>{e(t['before'])}</p></section>
+  <section><h2>{U['how']}</h2><ul class="how">{how}</ul>{tree}</section>
+  <section><h2>{U['feat']}</h2><ul class="feat">{"".join(f"<li>{e(f)}</li>" for f in t['features'])}</ul>{status}</section>
+  <section class="thought"><h2>{U['thought']}</h2>{thought}</section>
   {sales}
-  <nav class="pager" aria-label="其他工具">
-    <a href="{prev['slug']}.html"><small>上一個</small>{e(prev.get('short', prev['name']))}</a>
-    <a href="{nxt['slug']}.html"><small>下一個</small>{e(nxt.get('short', nxt['name']))}</a>
+  <nav class="pager" aria-label="{U['others']}">
+    <a href="{prev['slug']}{sx}.html"><small>{U['prev']}</small>{e(prev.get('short', prev['name']))}</a>
+    <a href="{nxt['slug']}{sx}.html"><small>{U['next']}</small>{e(nxt.get('short', nxt['name']))}</a>
   </nav>
 </main>
-<footer class="wrap">© Burger Film Studio · 偷心漢堡</footer>
+<footer class="wrap">{U['foot']}</footer>
 </body>
 </html>
 """
@@ -149,7 +198,7 @@ a:focus-visible{outline:2px solid var(--fg);outline-offset:3px;border-radius:4px
 .nav{position:sticky;top:0;z-index:5;background:color-mix(in oklab,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;max-width:1280px}
 .mark{font-family:var(--display);font-weight:900;font-size:19px;letter-spacing:-.02em;text-decoration:none;text-transform:uppercase}
-.back{font-size:14px;color:var(--muted);text-decoration:none}
+.back{font-size:14px;color:var(--muted);text-decoration:none}\n.nav-r{display:flex;align-items:center;gap:14px}\n.lang{display:flex;border:1px solid var(--line-2);border-radius:999px;padding:2px;gap:2px}\n.lang a{font:700 12px/1 var(--display);letter-spacing:.06em;text-decoration:none;color:var(--muted);padding:7px 10px;border-radius:999px}\n.lang a.on{background:var(--fg);color:var(--bg)}
 .back:hover{color:var(--fg)}
 .doc header{padding:56px 0 28px;border-bottom:1px solid var(--line-2);margin-bottom:8px}
 .kind{margin:0 0 10px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
@@ -185,4 +234,6 @@ os.makedirs(OUT, exist_ok=True)
 open(f"{OUT}/tool.css", "w").write(CSS)
 for n, t in enumerate(TOOLS):
     open(f"{OUT}/{t['slug']}.html", "w").write(page(t, TOOLS[n - 1], TOOLS[(n + 1) % len(TOOLS)]))
+for n, t in enumerate(TOOLS_EN):
+    open(f"{OUT}/{t['slug']}.en.html", "w").write(page(t, TOOLS_EN[n - 1], TOOLS_EN[(n + 1) % len(TOOLS_EN)], 'en'))
 print("tool pages:", [t["slug"] for t in TOOLS])

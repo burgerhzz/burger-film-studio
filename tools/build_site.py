@@ -2,6 +2,8 @@ import os
 """works.json + site_template.html → site/index.html"""
 import json, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import sys as _sys; _sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import i18n_en as I18N
 BLURB = {
  "cofit": "宋晏仁醫師與初日診所醫師群的健康節目",
  "women": "女性身心健康對談",
@@ -25,7 +27,7 @@ BLURB = {
  "brand": "得安 VR-1 安全帽、給通勤族的飆股報告書、接客啦！達康！…",
 }
 data = open(f"{ROOT}/site/works.json").read().replace("</", "<\\/")
-html = open(f"{ROOT}/tools/site_template.html").read().replace("__DATA__", data).replace("__BLURB__", json.dumps(BLURB, ensure_ascii=False))
+html = open(f"{ROOT}/tools/site_template.html").read().replace("__DATA__", data).replace("__BLURB__", json.dumps(BLURB, ensure_ascii=False)).replace("__I18N__", json.dumps({"EN": I18N.EN, "TERMS": I18N.TERMS, "ROLES": I18N.ROLES, "BLURB_EN": I18N.BLURB_EN}, ensure_ascii=False).replace("</", "<\\/"))
 # 一般網站需要完整的文件標頭（claude.ai 預覽會自己包，這裡補上）
 head = """<!doctype html>
 <html lang="zh-Hant">
