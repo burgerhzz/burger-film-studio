@@ -1,4 +1,4 @@
-"""整理成 site/works.json（網站唯一資料來源）並產生縮圖拼圖。"""
+"""整理成 site/works.json（網站唯一資料來源）並產生每支影片的縮圖。"""
 import glob, json, os, re, sys, urllib.request, io, math
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image
@@ -8,7 +8,7 @@ from xplatform import XP
 from topics import topic_of
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA, SITE = f"{ROOT}/data", f"{ROOT}/site"
-os.makedirs(f"{SITE}/sprites", exist_ok=True); os.makedirs(f"{DATA}/thumbs_raw", exist_ok=True)
+os.makedirs(f"{DATA}/thumbs_raw", exist_ok=True)
 # 精選：以出鏡人物的知名度為主（她 11/3 指定），(影片 ID, 顯示的人名)
 FEATURED = [  # (影片 ID, 顯示的人名, 人臉在縮圖中的水平位置 0–1)
     ("goeUtfe5wiU", "宋晏仁醫師", 0.83),
@@ -132,37 +132,37 @@ for k in works:
     works[k] = keep
 if unknown: print("⚠ 試算表裡有不存在的系列名稱（沒套用）：", unknown)
 
-# 縮圖
+# 縮圖：每支一張，存成 2 倍解析度的 webp（橫式 640×360、直式 480×854），前端捲到才載入
 def fetch(i, kind):
-    p = f"{DATA}/thumbs_raw/{i}_{kind}.jpg"
+    """下載原始縮圖到 data/。橫式抓 hq720（1280×720），沒有就退回 sddefault／hqdefault（之後裁掉黑邊）"""
+    p = f"{DATA}/thumbs_raw/{i}_{'h720' if kind == 'h' else 'v'}.jpg"
     if not os.path.exists(p):
-        name = "oar2.jpg" if kind == "v" else "mqdefault.jpg"
-        try: data = urllib.request.urlopen(f"https://i.ytimg.com/vi/{i}/{name}", timeout=30).read()
-        except Exception: data = urllib.request.urlopen(f"https://i.ytimg.com/vi/{i}/hqdefault.jpg", timeout=30).read()
+        names = ["hq720.jpg", "sddefault.jpg", "hqdefault.jpg"] if kind == "h" else ["oar2.jpg", "hqdefault.jpg"]
+        for name in names:
+            try: data = urllib.request.urlopen(f"https://i.ytimg.com/vi/{i}/{name}", timeout=30).read(); break
+            except Exception: continue
         open(p, "wb").write(data)
     return p
-jobs = [(w["id"], "v" if k == "short" else "h") for k in works for w in works[k]]
-with ThreadPoolExecutor(8) as ex: list(ex.map(lambda a: fetch(*a), dict.fromkeys(jobs)))
 
-def sprites(items, kind, tw, th, cols, rows, prefix):
-    per = cols * rows; info = {}
-    uniq = list(dict.fromkeys(items))
-    for n in range(math.ceil(len(uniq) / per)):
-        sheet = Image.new("RGB", (tw * cols, th * rows), (20, 18, 16))
-        for k, i in enumerate(uniq[n*per:(n+1)*per]):
-            im = Image.open(fetch(i, kind)).convert("RGB")
-            # 等比裁切填滿
-            r = max(tw / im.width, th / im.height)
-            im = im.resize((round(im.width * r), round(im.height * r)), Image.LANCZOS)
-            l, t = (im.width - tw) // 2, (im.height - th) // 2
-            sheet.paste(im.crop((l, t, l + tw, t + th)), ((k % cols) * tw, (k // cols) * th))
-            info[i] = [n, k % cols, k // cols]
-        sheet.save(f"{SITE}/sprites/{prefix}{n}.jpg", quality=68, optimize=True, progressive=True)
-    return {"cols": cols, "rows": rows, "files": [f"sprites/{prefix}{n}.jpg" for n in range(math.ceil(len(uniq)/per))], "map": info}
+SIZE = {"h": (640, 360), "v": (480, 854)}
+def thumb(i, kind):
+    out = f"{SITE}/thumbs/{kind}/{i}.webp"
+    if os.path.exists(out): return
+    tw, th = SIZE[kind]
+    im = Image.open(fetch(i, kind)).convert("RGB")
+    if kind == "h" and abs(im.width / im.height - 4 / 3) < .01:   # 4:3 的 sddefault／hqdefault 上下有黑邊，先裁成 16:9
+        h = round(im.width * 9 / 16); t = (im.height - h) // 2; im = im.crop((0, t, im.width, t + h))
+    r = max(tw / im.width, th / im.height)   # 等比裁切填滿
+    im = im.resize((round(im.width * r), round(im.height * r)), Image.LANCZOS)
+    l, t = (im.width - tw) // 2, (im.height - th) // 2
+    im.crop((l, t, l + tw, t + th)).save(out, "WEBP", quality=80, method=6)
 
-for f in glob.glob(f"{SITE}/sprites/*.jpg"): os.remove(f)
-H = [w["id"] for k in ("long", "perform", "voice") for w in works[k]]
-SP = {"h": sprites(H, "h", 320, 180, 10, 10, "h"), "v": sprites([w["id"] for w in works["short"]], "v", 240, 426, 10, 5, "v")}
+jobs = list(dict.fromkeys([(w["id"], "v" if k == "short" else "h") for k in works for w in works[k]]))
+for kind in SIZE: os.makedirs(f"{SITE}/thumbs/{kind}", exist_ok=True)
+with ThreadPoolExecutor(8) as ex: list(ex.map(lambda a: thumb(*a), jobs))
+want = {f"{SITE}/thumbs/{k}/{i}.webp" for i, k in jobs}
+for p in glob.glob(f"{SITE}/thumbs/*/*.webp"):
+    if p not in want: os.remove(p)   # 已排除或隱藏的作品，縮圖一起清掉
 series_meta = [{"key": s[0], "name": s[1], "group": s[2], "role": s[3]} for s in SERIES]
-json.dump({"works": works, "series": series_meta, "sprites": SP}, open(f"{SITE}/works.json", "w"), ensure_ascii=False)
-print({k: len(v) for k, v in works.items()}, "sprites", len(SP["h"]["files"]), len(SP["v"]["files"]))
+json.dump({"works": works, "series": series_meta}, open(f"{SITE}/works.json", "w"), ensure_ascii=False)
+print({k: len(v) for k, v in works.items()}, "thumbs", len(want))

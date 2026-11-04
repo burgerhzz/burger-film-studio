@@ -5,7 +5,7 @@
 ## 檔案
 - `site/index.html`：網站本體，作品資料直接寫在頁面裡
 - `site/works.json`：全部作品的資料，包含系列、分工、觀看數
-- `site/sprites/`：縮圖拼圖，一張大圖裡放很多支影片的縮圖
+- `site/thumbs/`：每支影片一張縮圖（webp，橫式 640×360、直式 480×854），網頁捲到才載入
 - `.github/workflows/pages.yml`：推上 main 就自動發布 `site/` 到 GitHub Pages
 - `site/media/hero.mp4`：首頁主視覺影片，從 meowma.com 原檔轉成網頁用的版本
 
@@ -13,7 +13,7 @@
 ```bash
 python3 tools/fetch_playlist.py <播放清單ID> data/long.json      # 抓播放清單
 python3 tools/fetch_details.py data/ids.txt data/details         # 抓每支影片的說明欄和觀看數
-python3 tools/build_works.py                                     # 歸系列、產生縮圖拼圖、輸出 works.json
+python3 tools/build_works.py                                     # 歸系列、產生縮圖、輸出 works.json
 python3 tools/build_site.py                                      # 套版產生 index.html
 ```
 
