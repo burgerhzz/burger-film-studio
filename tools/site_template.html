@@ -174,6 +174,7 @@ dialog::backdrop{background:rgba(0,0,0,.72)}
 .tool p.pain{margin:2px 0 0;padding:9px 12px;border-left:3px solid #ffe600;background:var(--bg);border-radius:0 6px 6px 0;color:var(--fg);font-size:13.5px;line-height:1.6}
 .tool p.now{padding:0 12px 0 15px;color:var(--muted)}
 .tool p.now b{display:block;font-size:11px;letter-spacing:.08em;color:var(--fg);margin-bottom:1px}
+.tool .nw{white-space:nowrap}
 .tool p.pain b{display:block;font-size:11px;letter-spacing:.08em;color:#ffe600;margin-bottom:1px}
 .tool{container-type:inline-size}
 .tool h3.one-line{white-space:nowrap;font-size:min(32px,10.6cqi)}
@@ -431,18 +432,18 @@ footer{padding-block:28px 40px;color:var(--dim);font-size:12.5px;text-align:cent
     <div class="head"><h2><small>AI 工具開發</small>Tools</h2><p>剪片時一直重複在做的事，我用 AI 協作寫成工具。每個都是工作上真的需要才做的，現在還每天在用，邊用邊改。</p></div>
     <div class="tools">
       <article class="tool"><div class="tool-cover" aria-hidden="true"><div class="tool-art"><b>burgerSub</b></div></div><span class="kind">Premiere Pro 擴充 · Mac App</span><h3>burgerSub<small>本機自動字幕</small></h3>
-        <p class="pain"><b>過往痛點</b>字幕要先丟剪映生成、簡轉繁、再匯進 Premiere，台灣口語還常聽錯，像「欸」變成「哎」。</p>
-        <p class="now"><b>現在</b>在 Premiere 裡直接產生並編輯字幕，全程在本機跑，不用上傳素材。</p>
-        <ul><li>台灣華語語音辨識，原生繁體</li><li>繁中斷詞，依語意斷行</li><li>可用腳本文檔對位校正</li><li>另有 Mac 獨立版 burgerSub Studio</li></ul>
+        <p class="pain"><b>過往痛點</b>字幕要先 <span class="nw">1. 剪映生成</span> <span class="nw">2. 簡轉繁</span> <span class="nw">3. 再匯進 Premiere</span><br>台灣口語還常聽錯，校正很花時間</p>
+        <p class="now"><b>現在</b>在 Pr 直接產生並編輯字幕，全程在本機跑，不用上傳素材。</p>
+        <ul><li>台灣華語語音辨識，原生繁體</li><li>可用腳本文檔對位</li><li>可關閉字幕空隙</li><li>可調整字幕加速倍率</li></ul>
         <a href="tools/burgersub.html">看介紹 →</a></article>
       <article class="tool"><div class="tool-cover" aria-hidden="true"><div class="tool-art"><b>burgerbo</b></div></div><span class="kind">Premiere Pro 擴充</span><h3>burgerbo<small>YouTube 直接進時間軸</small></h3>
         <p class="pain"><b>過往痛點</b>找到素材後，還要經過一堆下載與匯入步驟</p>
-        <p class="now"><b>現在</b>在 Premiere 裡貼上網址、選解析度，下載、轉碼、匯入專案、放上時間軸一次完成。</p>
+        <p class="now"><b>現在</b>在 Pr 貼上網址，素材直接匯入時間軸。</p>
         <ul><li>最高 4K，自動選最佳畫質來源</li><li>來源是 H.264 就原樣匯入，必要時才轉碼</li><li>可轉 ProRes 422</li></ul>
         <a href="tools/burgerbo.html">看介紹 →</a></article>
       <article class="tool"><div class="tool-cover" aria-hidden="true"><div class="tool-art"><b>burgerGuide</b></div></div><span class="kind">Premiere Pro 擴充</span><h3>burgerGuide<small>影片安全區預覽</small></h3>
         <p class="pain"><b>過往痛點</b>剪完才發現字幕、字卡被平台介面遮住</p>
-        <p class="now"><b>現在</b>在 Premiere 裡剪輯時直接預覽平台介面與安全區，確認字卡、字幕不會被操作按鈕遮擋。</p>
+        <p class="now"><b>現在</b>在 Pr 直接預覽平台介面與安全區，確認字卡、字幕不會被操作按鈕遮擋。</p>
         <ul><li>TikTok、Instagram、YouTube、Facebook 平台介面預覽</li><li>直式、橫式適用，支援安全框、三分法與字幕安全區</li><li>自訂格線，儲存常用配置為預設</li></ul>
         <a href="tools/burgerguide.html">看介紹 →</a></article>
       <article class="tool"><div class="tool-cover" aria-hidden="true"><div class="tool-art"><b>PR Sort</b></div></div><span class="kind">macOS App</span><h3 class="one-line">PR 打包專案整理器<small>Premiere 打包資料夾一鍵分類</small></h3>
