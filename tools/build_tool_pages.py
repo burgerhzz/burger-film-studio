@@ -135,7 +135,9 @@ def page(t, prev, nxt, lang='zh'):
     img = ""
     if t.get("img"):
         src, alt = t["img"]
-        if lang == 'zh': Image.open(os.path.expanduser(src)).convert("RGB").save(f"{OUT}/{t['slug']}.webp", "WEBP", quality=85, method=6)
+        # 原圖只在原本那台電腦上有；其他電腦找不到就沿用 repo 裡已經轉好的 webp
+        if lang == 'zh' and os.path.exists(os.path.expanduser(src)):
+            Image.open(os.path.expanduser(src)).convert("RGB").save(f"{OUT}/{t['slug']}.webp", "WEBP", quality=85, method=6)
         w, h = Image.open(f"{OUT}/{t['slug']}.webp").size
         img = f'<figure class="shot"><img src="{t["slug"]}.webp" alt="{e(alt)}" width="{w}" height="{h}"></figure>'
     how = "".join(f"<li><b>{e(a)}</b>{e(b)}</li>" for a, b in t["how"])
