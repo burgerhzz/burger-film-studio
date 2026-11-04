@@ -37,7 +37,7 @@ EN = {
 "在 Pr 直接產生並編輯字幕，全程在本機跑，不用上傳素材。": "Generate and edit subtitles right in Premiere. Everything runs locally; no uploads.",
 "可用腳本文檔對位": "Align subtitles to a script", "可關閉字幕空隙": "Close the gaps between subtitles", "可調整字幕加速倍率": "Adjustable subtitle speed multiplier",
 "在 Pr 貼上網址，素材直接匯入。": "Paste a URL in Premiere and the footage imports directly.",
-"在 Pr 直接預覽平台介面與安全區，確認字卡、字幕不會被操作按鈕遮擋。": "Preview platform interfaces and safe zones right in Premiere, so text cards and subtitles never end up behind the buttons.", "過往痛點": "Before", "現在": "Now",
+"在 Pr 直接預覽平台介面與安全區": "Preview platform interfaces and safe zones right in Premiere", "過往痛點": "Before", "現在": "Now",
 "字幕要先丟剪映生成、簡轉繁、再匯進 Premiere，台灣口語還常聽錯，像「欸」變成「哎」。": "Subtitles meant running audio through CapCut, converting Simplified to Traditional Chinese, then importing into Premiere, and Taiwanese expressions were often misheard.", "找到素材後，Google 找 YT 影片下載的網站或 App，從資料夾再匯入 Pr": "Found the footage? Next came googling for a YouTube downloader site or app, then importing from a folder into Premiere", "剪完才發現字幕、字卡被平台介面遮住": "Only after the edit do you find subtitles and text cards hidden behind the platform UI", "專案打包後檔案混亂，還得手動分類": "Packaged projects are a mess of files you have to sort by hand",
 "YouTube 影片直接匯入 Premiere": "YouTube videos straight into Premiere", "在 Premiere 裡貼上網址、選解析度，下載、轉碼、匯入專案、放上時間軸一次完成。": "Paste a URL in Premiere and pick a resolution: download, transcode, import and place on the timeline in one go.",
 "最高 4K，自動選最佳畫質來源": "Up to 4K, picks the best source automatically", "來源是 H.264 就原樣匯入，必要時才轉碼": "H.264 sources import as-is; transcodes only when needed", "可轉 ProRes 422": "ProRes 422 output",
