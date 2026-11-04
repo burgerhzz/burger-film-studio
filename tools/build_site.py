@@ -32,7 +32,7 @@ head = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta property="og:title" content="Burger Film Studio">
-<meta property="og:description" content="偷心漢堡的影像作品集：網路節目、短影音、Podcast 的企劃、拍攝與剪輯，以及 AI 剪輯工具開發。">
+<meta property="og:description" content="偷心漢堡的影像作品集：網路節目、短影音、Podcast、形象影片的企劃、拍攝與剪輯，也自己寫 Premiere 剪輯工具。">
 <meta property="og:image" content="https://burgerhzz.github.io/burger-film-studio/media/hero.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
 """
