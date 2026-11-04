@@ -45,7 +45,7 @@ TOOLS = [
         "sales": True,
     },
     {
-        "slug": "burgerguide", "name": "burgerGuide", "sub": "短影音安全區疊圖", "kind": "Premiere Pro 擴充",
+        "slug": "burgerguide", "name": "burgerGuide", "sub": "影片安全區預覽", "kind": "Premiere Pro 擴充",
         "img": ("~/Desktop/burgerGuide/docs/preview-platforms.png", "TikTok、Instagram Reels、YouTube Shorts 三個平台的擬真介面疊在畫面上，紅色虛線是安全框"),
         "before": "短影音的字卡、logo、人臉常常被平台的按鈕和文案蓋住，剪的時候看不出來，發出去才發現。"
                   "以前的作法有兩種：一種是匯入現成的安全框素材圖，但只有一種版型可以選；另一種是自己手動拉參考線。",
@@ -107,7 +107,7 @@ TOOLS_EN = [
               "One failure doesn't stop the batch. When it's done, successful clips leave the queue and failed ones stay, so what's left is exactly the retry list.",
               "Enter used to start the download; it now adds the URL to the list, because building a list shouldn't need the mouse for every clip. Pressing Enter on an empty field still starts the download, so the old habit costs one extra key."],
   "sales": True},
- {"slug": "burgerguide", "name": "burgerGuide", "sub": "Short-form safe-zone overlay", "kind": "Premiere Pro extension",
+ {"slug": "burgerguide", "name": "burgerGuide", "sub": "Video safe-zone preview", "kind": "Premiere Pro extension",
   "img": ("~/Desktop/burgerGuide/docs/preview-platforms.png", "TikTok, Instagram Reels and YouTube Shorts interfaces overlaid on a frame, with the safe area in red dashed lines"),
   "before": "Text cards, logos and faces in short-form video often end up hidden behind platform buttons and captions, and you only find out after posting. The options used to be a downloaded safe-zone template with a single layout, or dragging guides by hand.",
   "how": [("No template hunting", "Realistic TikTok, Instagram Reels, Facebook Reels and YouTube Shorts interfaces are built into the panel and drop onto the top track in one click."),
