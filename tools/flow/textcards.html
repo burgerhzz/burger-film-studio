@@ -1,5 +1,5 @@
 <!doctype html><meta charset="utf-8">
-<!-- 重點字卡展示動畫：黑底、網站主色（白／灰，紅色只當小點），六張字卡各示範一種文字特效。window.setT(t) 畫出任一時間點 -->
+<!-- 重點字卡展示動畫：黑底，白＋黃為主（照 EP5 字卡），部分字卡換亮色與不同字體，六張各示範一種文字特效。window.setT(t) 畫出任一時間點 -->
 <style>
 @font-face{font-family:SH;src:url("FONT_URL")}
 html,body{margin:0;width:1920px;height:1080px;background:#000;overflow:hidden;color:#fff}
@@ -7,23 +7,26 @@ html,body{margin:0;width:1920px;height:1080px;background:#000;overflow:hidden;co
 .mid{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font-family:SH;font-size:120px;line-height:1.15;white-space:nowrap}
 .tag{position:absolute;left:96px;bottom:80px;font:500 26px/1 "Helvetica Neue",sans-serif;letter-spacing:.14em;color:#666}
 .tag b{color:#fff;font-weight:600;margin-right:16px}
-.tag i{display:inline-block;width:10px;height:10px;border-radius:50%;background:#d42121;margin-right:14px;vertical-align:2px}
+.tag i{display:inline-block;width:10px;height:10px;border-radius:50%;background:#ffe600;margin-right:14px;vertical-align:2px}
 /* 螢光筆 */
 .hl{position:relative;display:inline-block;padding:0 .08em}
-.hl .band{position:absolute;left:-.04em;right:-.04em;top:.05em;height:1.12em;background:#fff;clip-path:polygon(2% 8%,100% 0,98% 92%,0 100%);transform-origin:0 50%}
+.hl .band{position:absolute;left:-.04em;right:-.04em;top:.05em;height:1.12em;background:#ffe600;clip-path:polygon(2% 8%,100% 0,98% 92%,0 100%);transform-origin:0 50%}
 .hl .tx{position:relative}
 .hl .tx2{position:absolute;left:.08em;top:0;color:#000}
 /* 合併 */
-.mg{position:absolute;left:0;right:0;top:50%;margin-top:-.6em;font-family:SH;font-size:140px;line-height:1.2;text-align:center;white-space:nowrap}
+.mg{position:absolute;left:0;right:0;top:50%;margin-top:-.6em;font-family:'jf-jinxuan';font-weight:800;font-size:140px;line-height:1.2;text-align:center;white-space:nowrap}
 /* 空心字 */
-.ol{position:absolute;left:180px;font-family:SH;font-size:190px;line-height:1;white-space:nowrap;color:transparent;-webkit-text-stroke:3px #fff;
+.ol{position:absolute;left:180px;font-family:'GenRyuMin2 TW';font-weight:900;font-size:190px;line-height:1;white-space:nowrap;color:transparent;-webkit-text-stroke:3px #fff;
   background:linear-gradient(#fff,#fff) no-repeat 0 0/0% 100%;-webkit-background-clip:text;background-clip:text}
 /* 打字 */
-.ty{font-size:110px}
-.ty .cur{display:inline-block;width:6px;height:.95em;background:#d42121;margin-left:10px;vertical-align:-.1em}
+.ty{font-size:110px;font-family:'GenSenRounded2 TW';font-weight:900}
+.ty .k{color:#3ee0ff}
+.ty .cur{display:inline-block;width:8px;height:.95em;background:#ffe600;margin-left:10px;vertical-align:-.1em}
 /* 漂浮、波浪 */
 .ch{display:inline-block}
-.fl .ch{text-shadow:0 0 22px rgba(255,255,255,.55),0 0 50px rgba(255,255,255,.25)}
+.fl{font-family:'Iansui';font-size:130px}
+.fl .ch{text-shadow:0 0 22px rgba(255,120,190,.75),0 0 54px rgba(255,120,190,.4)}
+.fl .y{color:#ffe600}
 </style>
 <div id="root"></div>
 <script>
@@ -34,10 +37,10 @@ const split=(s,cls='ch')=>[...s].map(c=>c===' '?'&nbsp;':`<span class="${cls}">$
 // 01 螢光筆劃記
 const s1=S(0,2.6,'HIGHLIGHTER　螢光筆劃記',1,`<div class="mid">先算出<span class="hl"><span class="band"></span><span class="tx">一天需要多少</span><span class="tx2">一天需要多少</span></span></div>`);
 // 02 合併
-const T2='成人每公斤 1.1 克';
+const T2='<b style="color:#ffe600;font-weight:inherit">成人</b>每公斤 1.1 克';
 const s2=S(2.6,4.8,'MERGE　合併',2,`<div class="mg" id="m1" style="clip-path:inset(0 0 50% 0)">${T2}</div><div class="mg" id="m2" style="clip-path:inset(50% 0 0 0)">${T2}</div>`);
 // 03 空心字填滿
-const s3=S(4.8,7.8,'OUTLINE FILL　空心字填滿',3,`<div class="ol" id="o1" style="top:300px">3 種人</div><div class="ol" id="o2" style="top:540px">適合補蛋白粉</div>`);
+const s3=S(4.8,7.8,'OUTLINE FILL　空心字填滿',3,`<div class="ol" id="o1" style="top:300px;-webkit-text-stroke-color:#ffe600;background-image:linear-gradient(#ffe600,#ffe600)">3 種人</div><div class="ol" id="o2" style="top:540px">適合補蛋白粉</div>`);
 // 04 打字換句
 const LINES=['族群一　高強度運動、重訓','族群二　高齡熟齡長輩','族群三　外食族、食量小'];
 const s4=S(7.8,13.4,'TYPING SWAP　打字換句',4,`<div class="mid ty"><span id="tw"></span><span class="cur" id="cu"></span></div>`);
@@ -48,9 +51,10 @@ const s5=S(13.4,16.4,'FLOAT DRIFT　漂浮',5,`<div class="mid fl">${split(T5)}<
 const T6='蛋白粉不是智商稅';
 const s6=S(16.4,19.4,'WAVE LETTERS　波浪文字',6,`<div class="mid wv">${split(T6)}</div>`);
 const SC=[s1,s2,s3,s4,s5,s6];
+[...s5.d.querySelectorAll('.ch')].slice(-4).forEach(e=>e.classList.add('y'));
 const fch=[...s5.d.querySelectorAll('.ch')].map((e,i)=>({e,p:3+((i*37)%15)/10,ph:i*1.7,ax:6+(i%3)*3,ay:10+(i%4)*3}));
 const wch=[...s6.d.querySelectorAll('.ch')];
-wch.forEach((e,i)=>e.style.color=i%2?'#9a9a9a':'#fff');
+wch.forEach((e,i)=>e.style.color=i%2?'#ffe600':'#fff');s6.d.querySelector('.wv').style.cssText='font-family:"Mantou Sans";font-size:136px';
 const band=s1.d.querySelector('.band'), htx=s1.d.querySelector('.hl .tx2');
 window.setT=t=>{
   SC.forEach(s=>{const u=t-s.a,L=s.b-s.a;s.d.style.opacity=u<0||u>=L?0:Math.min(cl(u/.18),cl((L-u)/.2))});
@@ -66,7 +70,7 @@ window.setT=t=>{
    o1.style.backgroundPosition=u>1.6?'100% 0':'0 0';}
   // 04：逐字打、停 0.9s、從尾端刪
   {let u=t-s4.a,txt='';for(const L of LINES){const n=[...L].length,ty=n*.055,del=n*.025,blk=ty+.9+del+.12;if(u<blk){txt=u<ty?[...L].slice(0,Math.floor(u/.055)).join(''):u<ty+.9?L:[...L].slice(0,Math.max(0,n-Math.floor((u-ty-.9)/.025))).join('');break}u-=blk;}
-   s4.d.querySelector('#tw').textContent=txt;s4.d.querySelector('#cu').style.opacity=Math.floor(t*2.2)%2?0:1;}
+   {const c=[...txt];s4.d.querySelector('#tw').innerHTML=c.slice(0,4).join('')+'<span class="k">'+c.slice(4).join('')+'</span>';}s4.d.querySelector('#cu').style.opacity=Math.floor(t*2.2)%2?0:1;}
   // 05：每字不同速度漂浮、輕微旋轉
   {const u=t-s5.a;fch.forEach(c=>{const w=2*Math.PI*(u/c.p)+c.ph;c.e.style.transform=`translate(${Math.sin(w*.8)*c.ax}px,${Math.sin(w)*c.ay}px) rotate(${Math.sin(w*.6)*4}deg)`})}
   // 06：1.4s 一個波，依序起伏、輕微擺動
