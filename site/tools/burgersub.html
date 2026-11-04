@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>burgerSub｜Burger Film Studio</title>
+<meta name="description" content="burgerSub：本機自動字幕。以前做字幕要先丟到剪映生成，出來是簡體，要再轉成繁體，最後把 SRT 匯進 Premiere。台灣的說法也常常聽錯，像「…">
+<meta property="og:title" content="burgerSub｜本機自動字幕">
+<meta property="og:image" content="https://burgerhzz.github.io/burger-film-studio/media/hero.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&family=Red+Hat+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="tool.css">
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="mark" href="../index.html">Burger Film Studio</a>
+  <a class="back" href="../index.html#tools">← 回作品集</a>
+</div></nav>
+<main class="wrap doc">
+  <header>
+    <p class="kind">Premiere Pro 擴充 · Mac App</p>
+    <h1>burgerSub</h1>
+    <p class="sub">本機自動字幕</p>
+  </header>
+  
+  <section><h2>以前怎麼做、卡在哪</h2><p>以前做字幕要先丟到剪映生成，出來是簡體，要再轉成繁體，最後把 SRT 匯進 Premiere。台灣的說法也常常聽錯，像「欸」會變成「哎」。口音、語速、背景音一有變化，錯字就跟著變多，每一關都要手動處理。</p></section>
+  <section><h2>它怎麼改善</h2><ul class="how"><li><b>不用離開 Premiere</b>直接在面板讀時間軸上的音訊。一小時的錄影剪成三分鐘，就只轉那三分鐘。</li><li><b>不用再簡轉繁</b>使用針對台灣華語訓練的語音模型，直接輸出繁體，「欸」也不會再被聽成「哎」。</li><li><b>錯過的字不會一直錯</b>在編輯器改過的專有名詞會記下來，下次辨識時就先餵給模型。</li><li><b>斷行不用一條條修</b>用繁體中文的斷詞模型，斷在語法的段落上，不是硬切在第 N 個字。</li><li><b>有稿子就直接對</b>把文字對到時間軸上。沒念出來的句子會標成灰色，後面的時間不會跑掉。</li></ul></section>
+  <section><h2>核心功能</h2><ul class="feat"><li>語音辨識</li><li>文檔對位</li><li>專有名詞字典</li><li>只轉錄用到的片段</li><li>In-Out 範圍</li><li>字幕編輯器：切分、合併、改時間、搜尋取代</li><li>Mac 獨立版 burgerSub Studio</li></ul><p class="status">2026 年 10 月發布 1.0 版。全程在本機跑，音訊不會離開電腦，也沒有用量費用。</p></section>
+  <section class="thought"><h2>做的時候想清楚的事</h2><p>斷句的每一個門檻，都是拿真實節目的字幕量出來的，不是隨手設一個數字。想多救幾個案例就把門檻放寬，通常會連錯的一起放進來。所以每次要調整，都要先拿整個字幕庫做修改前、修改後的比對。</p></section>
+  
+  <nav class="pager" aria-label="其他工具">
+    <a href="prsort.html"><small>上一個</small>PR Sort</a>
+    <a href="burgerbo.html"><small>下一個</small>burgerbo</a>
+  </nav>
+</main>
+<footer class="wrap">© Burger Film Studio · 偷心漢堡</footer>
+</body>
+</html>
