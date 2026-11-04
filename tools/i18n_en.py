@@ -35,7 +35,7 @@ EN = {
 "看介紹 →": "Learn more →",
 "YouTube 直接進時間軸": "YouTube straight to the timeline", "貼上網址、選解析度，下載、轉碼、匯入專案、放上時間軸一次完成。": "Paste a URL, pick a resolution: download, transcode, import and place on the timeline in one go.",
 "最高 4K，自動選最佳畫質來源": "Up to 4K, picks the best source automatically", "來源是 H.264 就原樣匯入，必要時才轉碼": "H.264 sources import as-is; transcodes only when needed", "可轉 ProRes 422": "ProRes 422 output",
-"短影音安全區疊圖": "Short-form safe-zone overlay", "把 TikTok、Reels、Shorts 的介面直接疊在畫面上，剪的時候就知道字卡會不會被按鈕蓋掉。": "Overlays the TikTok, Reels and Shorts UI on your frame, so you see what the buttons will cover while you edit.",
+"短影音安全區疊圖": "Short-form safe-zone overlay", "把 TikTok、Instagram、YouTube、Facebook 的短影音介面直接疊在畫面上，剪的時候就知道字卡會不會被按鈕蓋掉。": "Overlays the TikTok, Instagram, YouTube and Facebook short-form UI on your frame, so you see what the buttons will cover while you edit.",
 "三平台擬真介面，直式橫式都適用": "Realistic UI for three platforms, vertical and horizontal", "安全框、三分法、字幕安全區": "Safe frames, rule of thirds, title-safe area", "自訂格線，可存成預設": "Custom grids you can save as presets",
 "PR 打包專案整理器": "PR Sort", "Premiere 打包資料夾一鍵分類": "One-click sorting for Premiere project packages",
 "把「專案管理」打包出來的平鋪資料夾，分類成 Projects、Footage、Assets、Exports。": "Turns the flat folder from Project Manager into Projects, Footage, Assets and Exports.",
