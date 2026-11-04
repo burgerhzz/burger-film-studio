@@ -1,0 +1,50 @@
+<!doctype html><meta charset="utf-8">
+<!-- 自動組片展示動畫：黑底時間軸，播放頭掃過 EP5 1:25–2:35，b-roll 與字卡依實際時間點放上軌道。window.setT(t) -->
+<style>
+@font-face{font-family:SH;src:url("FONT_URL")}
+html,body{margin:0;width:1920px;height:1080px;background:#000;overflow:hidden;font-family:"PingFang TC","Helvetica Neue",sans-serif;color:#fff}
+#pv{position:absolute;left:480px;top:56px;width:960px;height:540px;border-radius:10px;overflow:hidden;background:#141414;border:1px solid #2a2a2a}
+#pv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+#pv .ph{position:absolute;inset:0;display:grid;place-items:center;color:#4a4a4a;font-size:30px;letter-spacing:.2em}
+#card{position:absolute;left:0;right:0;bottom:64px;text-align:center;font-family:SH;font-size:62px;line-height:1;text-shadow:0 3px 0 rgba(0,0,0,.6),0 0 14px rgba(0,0,0,.7);white-space:nowrap}
+#card b{font-weight:inherit;color:#ffe600}
+#lbl{position:absolute;left:480px;top:612px;font-size:26px;color:#999;letter-spacing:.04em}
+#lbl i{font-style:normal;color:#fff;font-family:"Helvetica Neue",monospace;margin-right:14px}
+.tl{position:absolute;left:220px;right:100px;top:700px;height:300px}
+.trk{position:absolute;left:0;right:0;height:62px;background:#0f0f0f;border-top:1px solid #1e1e1e;border-bottom:1px solid #1e1e1e}
+.lab{position:absolute;left:-180px;width:160px;height:62px;display:flex;align-items:center;font-size:20px;color:#777;letter-spacing:.08em}
+.clip{position:absolute;top:6px;height:50px;border-radius:5px;background-size:cover;background-position:center;transform-origin:50% 100%;opacity:0}
+.clip.c{background:#3a3200;border:1px solid #ffe600}
+.clip.v{background:#2a2a2a;border:1px solid #444}
+#ph{position:absolute;top:-24px;bottom:0;width:2px;background:#d42121}
+#ph:before{content:"";position:absolute;top:0;left:-8px;border:9px solid transparent;border-top-color:#d42121}
+.tc{position:absolute;top:-34px;font:500 18px/1 "Helvetica Neue",monospace;color:#555}
+</style>
+<div id="pv"><div class="ph">醫師訪談</div></div>
+<div id="lbl"></div>
+<div class="tl" id="tl"><div id="ph"></div></div>
+<script>
+const T0=85,T1=155,SWEEP=8.6;
+const BR=[[88,3,'整天需要多少',0],[99,3,'體重年齡',1],[125,3,'原型蛋白質',2],[143,1,'雞胸肉',3],[144,1,'雞腿',4],[145,1,'魚',5],[146,1,'豆腐',6],[147,1,'培根',7],[150,3,'油脂',8]];
+const CD=[[88.3,91.3,'先算出<b>一天需要多少</b>'],[91.3,93.9,'再看<b>實際吃了多少</b>'],[108.2,110.5,'<b>成人</b>每公斤 1.1 克'],[110.5,112.1,'<b>年長者</b>每公斤 1.2 克'],[113.1,115.9,'<b>運動族</b>每公斤 1.6 克'],[125,128.1,'<b>原型蛋白質</b>優先'],[150.5,153.4,'同樣 20 克<b>油脂差很多</b>']];
+const tl=document.getElementById('tl'),W=1600,X=s=>(s-T0)/(T1-T0)*W;
+const mm=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+[['V3　字卡',0],['V2　B-ROLL',80],['V1　訪談',160]].forEach(([n,y])=>{const t=document.createElement('div');t.className='trk';t.style.top=y+'px';t.innerHTML=`<div class="lab">${n}</div>`;tl.appendChild(t)});
+for(let s=90;s<=150;s+=10){const d=document.createElement('div');d.className='tc';d.style.left=(X(s)-18)+'px';d.textContent=mm(s);tl.appendChild(d)}
+const mk=(cls,top,a,b,bg)=>{const d=document.createElement('div');d.className='clip '+cls;d.style.top=(top+6)+'px';d.style.left=X(a)+'px';d.style.width=Math.max(10,X(b)-X(a)-2)+'px';if(bg)d.style.backgroundImage=`url(${bg})`;tl.appendChild(d);return d};
+const v1=mk('v',160,T0,T1); v1.style.opacity=1;
+const bc=BR.map(([a,d,n,i])=>({a,b:a+d,n,el:mk('',80,a,a+d,`BR/${i}.jpg`)}));
+const cc=CD.map(([a,b,h])=>({a,b,h,el:mk('c',0,a,b)}));
+const pv=document.getElementById('pv');
+const imgs=BR.map(([,,,i])=>{const m=new Image();m.src=`BR/${i}.jpg`;pv.appendChild(m);return m});
+const card=document.createElement('div');card.id='card';pv.appendChild(card);
+const ph=document.getElementById('ph'),lbl=document.getElementById('lbl');
+window.setT=t=>{
+  const s=T0+(T1-T0)*Math.min(1,t/SWEEP);
+  ph.style.left=X(s)+'px';
+  for(const c of [...bc,...cc]){const u=s-c.a;const k=u<0?0:Math.min(1,u/1.2);c.el.style.opacity=k;c.el.style.transform=`scaleY(${.4+.6*k})`}
+  let cur=null;bc.forEach((c,i)=>{const on=s>=c.a&&s<c.b;imgs[i].style.opacity=on?1:0;if(on)cur=c});
+  const cd=cc.find(c=>s>=c.a&&s<c.b);card.innerHTML=cd?cd.h:'';
+  lbl.innerHTML=`<i>${mm(s)}</i>${cur?'B-ROLL｜'+cur.n:'醫師訪談'}`;
+};
+</script>
