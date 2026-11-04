@@ -14,6 +14,9 @@ EN = {
 "累計觀看（每支取最高平台）": "Total views (top platform per video)", "單支最高觀看": "Top single video", "支作品": "videos", "個節目系列": "show series",
 # 服務
 "服務項目": "Services",
+"熟悉攝影、燈光、收音與後期剪輯，涵蓋調色、字幕、動態圖像與影片視覺包裝。": "Camera, lighting, audio and editing, plus color grading, subtitles, motion graphics and visual packaging.",
+"節目製作": "Show Production", "參與節目製作流程，負責現場拍攝、後期剪輯與影音內容製作，具備團隊協作經驗。": "On-set shooting, post-production and content for shows, working as part of a production team.",
+"短影音製作": "Short-form Content", "從內容發想到腳本、拍攝與剪輯，製作多元短影音，並依平台特性調整呈現方式。": "From ideas to scripts, shooting and editing, I make all kinds of short-form video and adapt each one to its platform.",
 "節目企劃與製作": "Show Production", "參與節目從前期企劃、內容規劃到現場執行，熟悉團隊協作與完整製作流程。": "From early planning and content development to on-set execution, I know how a full production team works together.",
 "影像拍攝與後期製作": "Video Production", "涵蓋攝影、燈光、收音、剪輯、調色與動態圖像，完成影片後期與視覺包裝。": "Camera, lighting, audio, editing, color grading and motion graphics: post-production and visual packaging, start to finish.",
 "短影音企劃與製作": "Short-form Content", "從內容發想、腳本撰寫到拍攝剪輯，製作多元短影音，並依平台特性調整呈現方式。": "From ideas and scripts to shooting and editing, I make all kinds of short-form video and adapt each one to its platform.",
