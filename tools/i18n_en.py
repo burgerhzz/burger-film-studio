@@ -16,7 +16,7 @@ EN = {
 "服務項目": "Services",
 "從企劃、拍攝到後期剪輯，參與節目完整製作流程。": "From planning and shooting to post-production, involved in every stage of the show.",
 "《讓 Pro 級的來》25+ 集・《不負責任面相學》34 集・初日醫學系列": "Let the Pros Do It 25+ eps · Irresponsible Face Reading 34 eps · Cofit Genesis series",
-"短影音企劃與製作": "Short-form Planning & Production", "長片拆短，跨平台延伸內容，讓一份素材創造更多流量。": "Long videos cut into shorts and spread across platforms, so one shoot brings in more views.",
+"短影音企劃與製作": "Short-form Planning & Production", "從內容企劃、腳本發想到拍攝剪輯，製作不同類型的短影音，並依平台特性調整呈現方式。": "From concepts and scripts to shooting and editing, I make all kinds of short-form video and adapt each one to its platform.",
 "泰語系列單支最高觀看：IG 101.1 萬・TikTok 81.6 萬": "Thai series, top single video: IG 1.01M · TikTok 816K",
 "多機拍攝、現場收音，一次錄製產出 Podcast 與影音版本。": "Multi-cam shooting and on-site audio: one recording, both a podcast and a video version.",
 "《耳邊說書》21 集・《達康還在講》22 集": "Books in Your Ear 21 eps · Dakang Still Talking 22 eps",
