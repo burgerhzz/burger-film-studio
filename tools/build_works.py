@@ -63,7 +63,7 @@ def short_group(d):
     if "Cofit" in c or "偷心漢堡" in c: return "Cofit 初日醫學", "後製"
     if "達康" in c: return "達康.come笑Tube", "拍攝、剪輯"
     if "Corn" in c: return "今天有 Corn", "拍攝、剪輯"
-    if "大久保" in c: return "大久保麻梨子", "拍攝、剪輯"
+    if "大久保" in c: return "大久保麻梨子", "剪輯"   # PressPlay 邀來的來賓，她只負責剪輯（11/4 確認）
     return "PressPlay Academy", "拍攝、剪輯"
 SHORT_FEAT = ["8-g34z-1FHE"]  # 預留
 for i in short_ids:
