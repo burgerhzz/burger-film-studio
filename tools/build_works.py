@@ -10,14 +10,15 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA, SITE = f"{ROOT}/data", f"{ROOT}/site"
 os.makedirs(f"{DATA}/thumbs_raw", exist_ok=True)
 # 精選：以出鏡人物的知名度為主（她 11/3 指定），(影片 ID, 顯示的人名)
-FEATURED = [  # (影片 ID, 顯示的人名, 人臉在縮圖中的水平位置 0–1)
-    ("goeUtfe5wiU", "宋晏仁醫師", 0.83),
-    ("xFAHxgq8BI4", "瓦基", 0.85),
-    ("Y5feeDqTcAQ", "ROLAND 羅蘭", 0.66),
-    ("am4VsQIHdfA", "阿基師", 0.78),
-    ("UJkHlNDEJUo", "阿部瑪利亞", 0.50),
-    ("nSfwU_ccPKA", "許藍方", 0.87),
-    ("Atnpqw0sRM8", "達康.come", 0.72),
+FEATURED = [  # (影片 ID, 顯示的人名, 人臉在縮圖中的水平位置 0–1, 案例說明)
+    # 案例說明她 11/4 確認過：只寫節目與負責項目，不放觀看數
+    ("goeUtfe5wiU", "宋晏仁醫師", 0.83, "宋晏仁醫師的訪談節目。這集來賓是心理學家陳永儀博士，聊焦慮、壓力和職業倦怠。"),
+    ("xFAHxgq8BI4", "瓦基", 0.85, "耳邊說書主編瓦基的說書節目。這集講《不消費的一年》，談怎麼戒掉衝動購物。跟 PressPlay 合作 21 集，Podcast、YouTube、Reels 同步上架。"),
+    ("Y5feeDqTcAQ", "ROLAND 羅蘭", 0.66, "ROLAND 在 PressPlay 開線上課程。我們準備了蔥抓餅、地瓜餅和大冰奶，邊吃邊聊他的自信哲學、遇過的挫折，還有和妹妹相處的趣事。"),
+    ("am4VsQIHdfA", "阿基師", 0.78, "當過國宴主廚的阿基師開了中式料理線上課，這集回答初學者最常問的 10 個問題。"),
+    ("UJkHlNDEJUo", "阿部瑪利亞", 0.50, "在台灣發展的日本 YouTuber 阿部瑪利亞開了日文課，這集示範怎麼用日文約曖昧對象出去。"),
+    ("nSfwU_ccPKA", "許藍方", 0.87, "達康.come 和微笑丹尼主持的節目，這集請到許藍方博士談性教育。"),
+    ("Atnpqw0sRM8", "達康.come", 0.72, "達康.come 和漫才少爺兩組漫才團體的綜藝節目，這集比誰是「天選之人」。36 集全程拍攝，其中 6 集由我剪輯。"),
 ]
 # 短影音最上面固定的名人區
 SHORT_PIN = [
@@ -54,8 +55,8 @@ for i in pool_long:
     w = base(i); w.update(series=key, role=role)
     works["long"].append(w)
 byid = {w["id"]: w for w in works["long"]}
-for n, (i, who, fx) in enumerate(FEATURED):
-    byid[i]["feat"] = n; byid[i]["person"] = who; byid[i]["fx"] = fx
+for n, (i, who, fx, case) in enumerate(FEATURED):
+    byid[i]["feat"] = n; byid[i]["person"] = who; byid[i]["fx"] = fx; byid[i]["case"] = case
 
 def short_group(d):
     c = d["channel"]

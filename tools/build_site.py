@@ -13,7 +13,7 @@ BLURB = {
  "face": "feat. 簡少年｜第一、二季共 34 集",
  "street": "街頭訪問｜試播 2 集",
  "manzai": "feat. 達康.come、微笑丹尼｜來賓：許藍方、啾啾鞋、營養師 Ricky…｜11+ 集",
- "pbs": "feat. 達康.come、漫才少爺｜36 集",
+ "pbs": "feat. 達康.come、漫才少爺｜36 集全程拍攝，其中 6 集剪輯",
  "dakang": "達康.come 的 Podcast 影音版｜22 集",
  "girl": "零基礎檔車教學到重機考照 feat. 大魔王 Singer、加菲貓、阿娟",
  "trivia": "汽機車冷知識 feat. 大魔王 Singer",
