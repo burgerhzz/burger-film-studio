@@ -32,7 +32,7 @@ html,body{margin:0;width:1920px;height:1080px;background:#000;overflow:hidden;co
 .c5 .mid{font-family:'Iansui';font-size:60px}
 .c5 .ch{text-shadow:0 0 14px rgba(255,120,190,.75),0 0 34px rgba(255,120,190,.4)}
 .c5 .y{color:#ffe600}
-.c6 .mid{font-family:'Mantou Sans';font-size:66px}
+.c6 .pz{position:absolute;left:0;right:0;top:50%;margin-top:-.55em;text-align:center;white-space:nowrap;font-family:'Mantou Sans';font-size:66px;line-height:1.1;transform-origin:50% 50%;will-change:transform,filter}
 </style>
 <div id="root"></div>
 <script>
@@ -48,11 +48,13 @@ const c2=cell(2,'MERGE　合併',`<div class="mg" id="m1" style="clip-path:inset
 const c3=cell(3,'OUTLINE FILL　空心字填滿',`<div class="ol" id="o1" style="top:170px;-webkit-text-stroke-color:#ffe600;background-image:linear-gradient(#ffe600,#ffe600)">3 種人</div><div class="ol" id="o2" style="top:280px">適合補蛋白粉</div>`);
 const c4=cell(4,'TYPING　打字列點',`<div class="ty">${LINES.map(()=>`<div class="tyl"><span class="tw"></span><span class="cur"></span></div>`).join('')}</div>`);
 const c5=cell(5,'FLOAT DRIFT　漂浮',`<div class="mid">${split('睡眠休息也是增肌關鍵')}</div>`);
-const c6=cell(6,'WAVE LETTERS　波浪文字',`<div class="mid">${split('蛋白粉不是智商稅')}</div>`);
+const c6=cell(6,'PUNCH ZOOM　衝擊放大',[4,3,2,1,0].map(k=>`<div class="pz" data-k="${k}">蛋白粉不是智商稅</div>`).join(''));
 [...c5.querySelectorAll('.ch')].slice(-4).forEach(e=>e.classList.add('y'));
 // 漂浮：每字週期 8/3 或 4 秒（都能整除 8），相位、幅度各不同
 const fch=[...c5.querySelectorAll('.ch')].map((e,i)=>({e,p:i%2?8/3:4,ph:i*1.7,ax:3+(i%3)*1.5,ay:5+(i%4)*1.5}));
-const wch=[...c6.querySelectorAll('.ch')];
+const pz=[...c6.querySelectorAll('.pz')].map(e=>({e,k:+e.dataset.k}));
+// 衝擊放大：0–0.42s 從深處衝出、放大過頭到 1.14，之後回彈定位；1.65s 起淡出。2 秒一輪（能整除 8 秒）
+const punch=u=>{if(u<0)return{s:.04,b:14,o:0};if(u<.42){const k=Math.pow(u/.42,2.2);return{s:.04+1.1*k,b:14*(1-k),o:cl(u/.12)}}const v=u-.42;const s=1+.14*Math.exp(-v*9)*Math.cos(v*16);return{s,b:0,o:1-cl((u-1.65)/.3)}};
 const band=c1.querySelector('.band'),htx=c1.querySelector('.tx2'),m1=c2.querySelector('#m1'),m2=c2.querySelector('#m2'),o1=c3.querySelector('#o1'),o2=c3.querySelector('#o2');
 const tyl=[...c4.querySelectorAll('.tyl')];
 window.setT=t=>{
@@ -74,6 +76,6 @@ window.setT=t=>{
   // 05：漂浮
   fch.forEach(c=>{const w=2*Math.PI*t/c.p+c.ph;c.e.style.transform=`translate(${Math.sin(w+1.3)*c.ax}px,${Math.sin(w)*c.ay}px) rotate(${Math.sin(2*w)*4}deg)`});
   // 06：波浪，8/6 秒一個波
-  wch.forEach((e,i)=>{const w=2*Math.PI*t/(8/6)-i*.55;e.style.transform=`translateY(${-Math.max(0,Math.sin(w))*18}px) rotate(${Math.sin(w)*5}deg)`});
+  {const u=t%2;pz.forEach(({e,k})=>{const p=punch(u-k*.04);let o=p.o;if(k){o*=.32*(1-k/5)*(1-cl((u-.55)/.25))}e.style.transform=`scale(${p.s})`;e.style.filter=p.b>.1?`blur(${p.b}px)`:'none';e.style.opacity=o;});}
 };
 </script>
